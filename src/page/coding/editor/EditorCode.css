@@ -104,6 +104,11 @@ h4 {
     font-weight: bold;
     background-color: #afec3f;
     border: none;
+    &:disabled {
+        background-color: #616161;
+        color: grey;
+        cursor: not-allowed;
+    }
     border-radius: 4px;
     transition: 0.3s;
     cursor: pointer;

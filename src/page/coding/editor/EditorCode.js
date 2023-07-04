@@ -74,7 +74,7 @@ function EditorCode() {
               setUserCode(value);
             }}
           />
-          <button className="run-btn" onClick={() => compile()}>
+          <button className="run-btn" disabled={!userLang} onClick={() => compile()}>
             Run
           </button>
         </div>
