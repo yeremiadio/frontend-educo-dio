@@ -8,7 +8,7 @@ import spinner from "./Eclipse-1s-200px.svg";
 function EditorCode() {
   const [userCode, setUserCode] = useState(``);
 
-  const [userLang, setUserLang] = useState("python");
+  const [userLang, setUserLang] = useState("");
 
   const [userTheme, setUserTheme] = useState("vs-dark");
 
@@ -69,7 +69,6 @@ function EditorCode() {
             width="100%"
             theme={userTheme}
             language={userLang}
-            defaultLanguage="python"
             defaultValue="# Enter your Code here"
             onChange={(value) => {
               setUserCode(value);
