@@ -14,8 +14,6 @@ function EditorCode() {
 
   const [fontSize, setFontSize] = useState("vs-dark");
 
-  const [userInput, setUserInput] = useState("");
-
   const [userOutput, setUserOutput] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -25,7 +23,7 @@ function EditorCode() {
   };
 
   async function compile() {
-    if (!userCode ) return;
+    if (!userCode) return;
     setLoading(true);
     const data = {
       code: userCode,
@@ -82,13 +80,6 @@ function EditorCode() {
           </button>
         </div>
         <div className="right-container">
-          <h4>Input : </h4>
-          <div className="input-box">
-            <textarea
-              id="code-inp"
-              onChange={(e) => setUserInput(e.target.value)}
-            ></textarea>
-          </div>
           <h4>Output</h4>
           {loading ? (
             <div className="spinner-box">
