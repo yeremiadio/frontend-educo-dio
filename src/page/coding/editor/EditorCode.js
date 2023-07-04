@@ -12,7 +12,7 @@ function EditorCode() {
 
   const [userTheme, setUserTheme] = useState("vs-dark");
 
-  const [fontSize, setFontSize] = useState("vs-dark");
+  const [fontSize, setFontSize] = useState(20);
 
   const [userInput, setUserInput] = useState("");
 
