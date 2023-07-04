@@ -24,11 +24,11 @@ app.post("/compile", async (req, res) => {
     });
     let config = {
         method: 'post',
-        url: ('https://run.glot.io/languages/' + language + '/latest', {
+        url: ('https://glot.io/api/run/' + language + '/latest', {
             stdin: code
         }),
         headers: {
-            'Authorization': '69af4396-93b9-4efc-a929-bcbe6c2e83de',
+            'Authorization': 'c86478af-16d8-423b-887e-57deb198b441',
             'Content-Type': 'application/json'
         },
         data: data
