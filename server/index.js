@@ -1,8 +1,8 @@
-const express = require("express");
-const cors = require("cors");
-const Axios = require("axios");
+const express = require('express');
+const cors = require('cors');
+const Axios = require('axios');
 const app = express();
-const PORT = 8000;
+const PORT = 3001;
  
 app.use(cors());
 app.use(express.json());
@@ -36,8 +36,8 @@ app.post("/compile", async (req, res) => {
     //calling the code compilation API
     Axios(config)
         .then((response) => {
-            res.json(response.data)
-            console.log(response.data)
+            res.json({output: response.data.stdout})
+            console.log(response.data.stdout)
         }).catch((error) => {
             console.error(error);
             res.status(500).json({ error: 'An error occurred while compiling the code.' });
