@@ -14,6 +14,8 @@ function EditorCode() {
 
   const [fontSize, setFontSize] = useState("vs-dark");
 
+  const [userInput, setUserInput] = useState("");
+
   const [userOutput, setUserOutput] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,7 @@ function EditorCode() {
     setLoading(true);
     const data = {
       code: userCode,
+      userInput: userInput,
     };
     await axios
       .post(`http://localhost:8000/compile`, data)
@@ -74,11 +77,22 @@ function EditorCode() {
               setUserCode(value);
             }}
           />
-          <button className="run-btn" disabled={!userLang} onClick={() => compile()}>
+          <button
+            className="run-btn"
+            disabled={!userLang}
+            onClick={() => compile()}
+          >
             Run
           </button>
         </div>
         <div className="right-container">
+          <h4>Input : </h4>
+          <div className="input-box">
+            <textarea
+              id="code-inp"
+              onChange={(e) => setUserInput(e.target.value)}
+            ></textarea>
+          </div>
           <h4>Output</h4>
           {loading ? (
             <div className="spinner-box">
