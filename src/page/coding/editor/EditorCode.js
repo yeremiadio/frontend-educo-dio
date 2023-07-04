@@ -1,36 +1,47 @@
-import Axios from 'axios';
+import { useState } from 'react'; 
 import './EditorCode.css';
-import React, { useState } from 'react'
-import { Editor } from '@monaco-editor/react';
+import Editor from "@monaco-editor/react";
 import Navbar from './Navbar';
-import spinner from './Eclipse-1s-200px.svg'
-
+import Axios from 'axios';
+import spinner from './Eclipse-1s-200px.svg';
+ 
 function EditorCode() {
-    const [ userCode, setUserCode ] = useState(``);
-
-    const [ userLang, setUserLang ] = useState("python");
-
-    const [ userTheme, setUserTheme ] = useState("vs-dark");
-
-    const [ fontSize, setFontSize ] = useState("vs-dark");
-
-    const [ userInput, setUserInput ] = useState( "" );
-
-    const [ userOutput, setUserOutput ] = useState( "" );
-
-    const [ loading, setLoading ] = useState(false);
-
+ 
+    // State variable to set users source code
+    const [userCode, setUserCode] = useState(``);
+ 
+    // State variable to set editors default language
+    const [userLang, setUserLang] = useState("python"); 
+ 
+    // State variable to set editors default theme
+    const [userTheme, setUserTheme] = useState("vs-dark");
+ 
+    // State variable to set editors default font size
+    const [fontSize, setFontSize] = useState(20);
+ 
+    // State variable to set users input
+    const [userInput, setUserInput] = useState("");
+ 
+    // State variable to set users output
+    const [userOutput, setUserOutput] = useState("");
+ 
+    // Loading state variable to show spinner
+    // while fetching data
+    const [loading, setLoading] = useState(false);
+ 
     const options = {
         fontSize: fontSize
     }
-
+ 
+    // Function to call the compile endpoint
     function compile() {
         setLoading(true);
         if (userCode === ``) {
             return
         }
-
-        Axios.post(`http://localhost:8000/compile` , {
+ 
+        // Post request to compile endpoint
+        Axios.post(`http://localhost:8000/compile`, {
             code: userCode,
             language: userLang,
             input: userInput
@@ -40,56 +51,52 @@ function EditorCode() {
             setLoading(false);
         })
     }
-
-    
-
+ 
+    // Function to clear the output screen
     function clearOutput() {
         setUserOutput("");
     }
-
+ 
     return (
-        <div className='EditorCode'>
+        <div className="EditorCode">
             <Navbar
                 userLang={userLang} setUserLang={setUserLang}
                 userTheme={userTheme} setUserTheme={setUserTheme}
                 fontSize={fontSize} setFontSize={setFontSize}
             />
-            <div className='main-code'>
-                <div className='left-container'>
+            <div className="main-code">
+                <div className="left-container">
                     <Editor
                         options={options}
-                        height = "100vh"
-                        width = "100%"
-                        theme = {userTheme}
+                        height="100vh"
+                        width="100%"
+                        theme={userTheme}
                         language={userLang}
-                        defaultLanguage='python'
-                        defaultValue='# Enter your Code here'
+                        defaultLanguage="python"
+                        defaultValue="# Enter your code here"
                         onChange={(value) => { setUserCode(value) }}
                     />
-                    <button className='run-btn' onClick={() => compile()}>
+                    <button className="run-btn" onClick={() => compile()}>
                         Run
                     </button>
                 </div>
-                <div className='right-container'>
-                    <h4>Input : </h4>
-                    <div className='input-box'>
-                        <textarea 
-                            id='code-inp' 
-                            onChange={(e) => setUserInput(e.target.value)}
-                        >
+                <div className="right-container">
+                    <h4>Input:</h4>
+                    <div className="input-box">
+                        <textarea id="code-inp" onChange=
+                            {(e) => setUserInput(e.target.value)}>
                         </textarea>
                     </div>
-                    <h4>Output</h4>
+                    <h4>Output:</h4>
                     {loading ? (
-                        <div className='spinner-box'>
-                            <img src={spinner} alt='Loading...'/>
+                        <div className="spinner-box">
+                            <img src={spinner} alt="Loading..." />
                         </div>
                     ) : (
-                        <div className='output-box'>
+                        <div className="output-box">
                             <pre>{userOutput}</pre>
-                            <button onClick={() => {clearOutput() }}
-                                className='clear-btn'
-                            >
+                            <button onClick={() => { clearOutput() }}
+                                className="clear-btn">
                                 Clear
                             </button>
                         </div>
@@ -99,5 +106,5 @@ function EditorCode() {
         </div>
     );
 }
-
-export default EditorCode
+ 
+export default EditorCode;
