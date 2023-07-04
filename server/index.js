@@ -1,45 +1,46 @@
 const express = require("express");
 const cors = require("cors");
-const Axios = require("axios");
+const axios = require("axios");
 const app = express();
 const PORT = 8000;
 
 app.use(cors());
 app.use(express.json());
 
-app.post("/compile", (req, res) => {
-
-    let code = req.body.code;
-    let language = req.body.language;
-    let input = req.body.input;
-
-    if (language === "python") {
-        language = "py"
-    }
-
-    let data = ({
-        "code" : code,
-        "language" : language,
-        "input" : input
+app.post("/compile", async (req, res) => {
+  let code = req.body.code;
+  let language = req.body.language;
+  let langShort;
+  if (language === "python") {
+    langShort = "py";
+  }
+  let data = {
+    files: [
+      {
+        name: `main.${langShort ? langShort : "js"}`,
+        content: code,
+      },
+    ],
+  };
+  let config = {
+    method: "post",
+    url: `https://glot.io/api/run/${language ? language : "javascript"}/latest`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token af2c59c1-a508-45df-8b66-184f6ff2fbe4`,
+    },
+    data: data,
+  };
+  console.log(config);
+  await axios(config)
+    .then((response) => {
+      return res.status(200).json({ status: 200, data: response.data });
+    })
+    .catch(() => {
+      return res.status(500).json({ error: "Internal Server Error" });
     });
-    let config = {
-        method: 'post',
-        url: 'https://codexweb.netlify.app/.netlify/functions/enforceCode',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: data
-    };
-
-    Axios(config)
-        .then((response) => {
-            res.send(response.data)
-            console.log(response.data) 
-        }).catch((error) => {
-            console.log(error);
-        });
-})
+});
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(` Server listening on port ${PORT}`);
+  console.log(` Server listening on port ${PORT}`);
 });
