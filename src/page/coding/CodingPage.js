@@ -21,7 +21,7 @@ export default function CodingPage() {
           }
         </Typography>
       </Container>
-      <Container sx={{margin: 2}}>
+      <Container component={"main"} maxWidth="lg" sx={{ margin: 2 }}>
         <EditorCode/>
       </Container>
       </div>
