@@ -1,49 +1,42 @@
-const express = require('express');
-const cors = require('cors');
-const Axios = require('axios');
+const express = require("express");
+const cors = require("cors");
+const axios = require("axios");
 const app = express();
-const PORT = 3001;
+const PORT = 8000;
  
 app.use(cors());
 app.use(express.json());
- 
+
 app.post("/compile", async (req, res) => {
-    //getting the required data from the request
-    let code = req.body.code;
-    let language = req.body.language;
-    let input = req.body.input;
- 
-    if (language === "python") {
-        language = "py"
-    }
- 
-    let data = ({
-        "code": code,
-        "language": language,
-        "input": input
+  let code = req.body.code;
+  
+  let data = {
+    files: [
+      {
+        name: `main.cpp`,
+        content: code,
+      },
+    ],
+  };
+  let config = {
+    method: "post",
+    url: `https://glot.io/api/run/cpp/latest`,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token 70e21e8e-494f-4fa3-94d3-7272ba272385`, 
+    },
+    data: data,
+  };
+  console.log(config);
+  await axios(config)
+    .then((response) => {
+      return res.status(200).json({ status: 200, data: response.data });
+    })
+    .catch(() => {
+      return res.status(500).json({ error: "Internal Server Error" });
     });
-    let config = {
-        method: 'post',
-        url: ('https://glot.io/api/run/' + language + '/latest', {
-            stdin: code
-        }),
-        headers: {
-            'Authorization': 'c86478af-16d8-423b-887e-57deb198b441',
-            'Content-Type': 'application/json'
-        },
-        data: data
-    };
-    //calling the code compilation API
-    Axios(config)
-        .then((response) => {
-            res.json({output: response.data.stdout})
-            console.log(response.data.stdout)
-        }).catch((error) => {
-            console.error(error);
-            res.status(500).json({ error: 'An error occurred while compiling the code.' });
-        });
-})
- 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+});
+
+app.listen(process.env.PORT || PORT, () => {
+  console.log(` Server listening on port ${PORT}`);
 });
