@@ -44,6 +44,6 @@ app.post("/compile", async (req, res) => {
         });
 })
  
-app.listen(process.env.PORT || PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
