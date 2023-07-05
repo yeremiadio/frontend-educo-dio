@@ -11,20 +11,20 @@ import { ListRoutes } from "./utils/Routes";
 function App() {
   return (
       <div className="App">
-          <Routes>
-            <Route element={<PrivateRoutes/>}>
+        <Routes>
+          <Route element={<PrivateRoutes/>}>
               {ListRoutes.map((item,index) => {
                 return (
-                  <Route key={index} path={item.path} element={item.element}/>
+                    <Route key={index} path={item.path} element={item.element}/>
                 );
               })
             }
             </Route>
-            
-            <Route path="/" element={<LandingPage />} exact/>
-            <Route path="/login" element={<HalamanLogin />}/>
-            <Route path="*" element={<NotFound />}/>
-          </Routes>
+          
+          <Route path="/" element={<LandingPage />} exact/>
+          <Route path="/login" element={<HalamanLogin />}/>
+          <Route path="*" element={<NotFound />}/>
+        </Routes>
       </div>
   );
 }

@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); 
 const cors = require("cors");
 const axios = require("axios");
 const app = express();
@@ -24,7 +24,7 @@ app.post("/compile", async (req, res) => {
     url: `https://glot.io/api/run/cpp/latest`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token 70e21e8e-494f-4fa3-94d3-7272ba272385`,
+      Authorization: `Token 40f4948c-6825-417d-9038-6eaba9f89e35`,
     },
     data: data,
   };
