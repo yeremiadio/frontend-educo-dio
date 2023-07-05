@@ -15,7 +15,7 @@ export default function CodingPage() {
         <Typography align='center' variant='h3' sx={{fontStyle: "inherit", fontFamily: "initial", fontWeight: 30}} gutterBottom>
           Coding Page
         </Typography>
-        <Typography align='center' variant='h6' sx={{color: "gray", fontFamily: "revert"}} gutterBottom>
+        <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
           }

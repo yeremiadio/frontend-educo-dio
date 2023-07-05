@@ -14,7 +14,7 @@ export default function Archive() {
         <Typography align='center' variant='h3' sx={{fontStyle: "inherit", fontFamily: "initial", fontWeight: 30}} gutterBottom>
           Archive's Page
         </Typography>
-        <Typography align='center' variant='h6' sx={{color: "gray", fontFamily: "revert"}} gutterBottom>
+        <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           {
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
           }
@@ -23,7 +23,7 @@ export default function Archive() {
       <Divider/>
       <Container component={"main"} maxWdth="md" sx={{margin: 2}}>
         
-        <Typography align='center' variant='h6' sx={{color: "gray", fontFamily: "revert"}} gutterBottom>
+        <Typography align='center' variant='h4' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           <SafetyDividerTwoTone/> File Code Archive.
         </Typography>
       </Container>
