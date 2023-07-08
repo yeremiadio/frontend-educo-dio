@@ -38,10 +38,13 @@ export default function LandingPage(params) {
                                     label="Education Coding"
 
                                     varianttitle="h5"
-                                    title="Educo.com"
+                                    title="Educo"
 
                                     variantbody="body2"
-                                    body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                    body="The Educo 'Education Coding' application is a learning application about programming languages and understanding the basics of programming that users want to learn. 
+                                            This application also provides an online code compiler to assist users in their programming code creation. 
+                                            And currently, it includes a C++ programming language-based code compiler. 
+                                            So go ahead, explore your experience and create your best code."
                                 />
                             </Grid>
                             <Grid item xs={5}>

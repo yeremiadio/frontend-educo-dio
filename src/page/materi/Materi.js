@@ -24,11 +24,11 @@ export default function Materi() {
             </Container>
             <Container component={"main"} maxWidth="lg" sx={{margin: 2}}>
                 <MateriContent
-                    item1 = "Materi Satu"
-                    item2 = "Materi Dua"
-                    item3 = "Materi Tiga"
-                    item4 = "Materi Empat"
-                    item5 = "Materi Lima"
+                    item1 = "Variabel & Tipe Data"
+                    item2 = "Operator"
+                    item3 = "Percabangan"
+                    item4 = "Perulangan"
+                    item5 = "Array"
                 />
             </Container>
             </div>

@@ -1,26 +1,26 @@
 export const dataDashboard = [
     {
-        title: "Materi 1",
+        title: "Tipe Data",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
         image: "/#",
     },
     {
-        title: "Materi 2",
+        title: "Operator",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
         image: "/#",
     },
     {
-        title: "Materi 3",
+        title: "Perulangan",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
         image: "/#",
     },
     {
-        title: "Materi 4",
+        title: "Percabangan",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
         image: "/#",
     },
     {
-        title: "Materi 5",
+        title: "Array",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
         image: "/#",
     },

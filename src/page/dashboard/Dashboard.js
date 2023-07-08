@@ -25,7 +25,7 @@ export default function Dashboard() {
       </Container>
       <Divider component="animate" sx={{color: "white", fontSize: 10,}} />
       <Container component={"main"} maxWidth="md" sx={{margin: 2,}} >
-        <Grid container spacing={5} alignItems="flex-end">
+        <Grid container spacing={5} alignItems="center">
           {dataDashboard.map((item, index) => {
             return (
               <Grid item key={index} lg={4} md={4} sm={4} xs={12}>
@@ -33,6 +33,7 @@ export default function Dashboard() {
                   <CardHeader
                     title={item.title}
                     titleTypographyProps={{ align: "center" }}
+                    sx={{fontStyle: "initial", fontFamily: "monospace"}}
                   />
                   <CardContent>
                   {item.description}
