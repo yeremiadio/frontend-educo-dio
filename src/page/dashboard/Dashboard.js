@@ -19,7 +19,7 @@ export default function Dashboard() {
         </Typography>
         <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           {
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+          "Welcome to Your Dashboard, How are you today?"
           }
         </Typography>
       </Container>

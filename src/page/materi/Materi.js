@@ -16,7 +16,7 @@ export default function Materi() {
                     </Typography>
                     <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
                     {
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+                    "Step by step, I will guide you to understand what you want to comprehend."
                     }
                 </Typography>
                 <br/>
