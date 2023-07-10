@@ -14,11 +14,11 @@ export default function Assignment() {
       <div className='content'>
       <Container component={"main"} maxWidth="md" sx={{ pt: 5, pb: 6 }}>
         <Typography align='center' variant='h3' sx={{fontStyle: "inherit", fontFamily: "initial", fontWeight: 30}} gutterBottom>
-          Assigment's Page 
+          Assignment's Page 
         </Typography>
         <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           {
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+          "Complete your assignments with excellence and test the breadth of your knowledge."
           }
         </Typography>
       </Container>

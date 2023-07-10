@@ -17,11 +17,6 @@ export default function Archive() {
           <Typography align='center' variant='h3' sx={{fontStyle: "inherit", fontFamily: "initial", fontWeight: 30}} gutterBottom>
             Archive's Page
           </Typography>
-          <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
-            {
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
-            }
-          </Typography>
         </Container>
         <Divider/>
         <Container component={"main"} maxWidth="md" sx={{margin: 2}}>

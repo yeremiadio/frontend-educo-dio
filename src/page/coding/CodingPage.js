@@ -17,7 +17,7 @@ export default function CodingPage() {
         </Typography>
         <Typography align='center' variant='h6' sx={{color: "white", fontFamily: "revert"}} gutterBottom>
           {
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+          "Create an exciting and enjoyable code, everything is in your hands."
           }
         </Typography>
       </Container>
