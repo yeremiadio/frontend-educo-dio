@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, ThemeProvider } from "@mui/material";
+import { Box, Button, Container, ThemeProvider } from "@mui/material";
 import React from "react";
 import CardOutlined from "../components/Cards/CardOutlined"; 
 import { useNavigate } from "react-router-dom";
@@ -16,28 +16,24 @@ export default function LandingPage(params) {
             <div className="content">
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="lg" >
-                    <Grid container spacing={2}>
                         <Box display="flex" flexDirection="column">
                             <h1>Welcome Codingers,</h1>
                             <h3>to Our Web Education Coding.</h3>
                         </Box>
                         <Box sx={{
                             display: 'flex',
-                            flexGrow: 1,
+                            flexDirection:'row',
                             alignItems:"justify",
                             '& > :not(style)': {
                                 m: 2,
-                                width: 541,
-                                height: 260,
                                 },
                         }}>
-                            <Grid item xs={10}>
                                 <CardOutlined
                                     variantcard="outlined"
                                     colorlabel="text.secondary"
                                     label="Education Coding"
 
-                                    varianttitle="h5"
+                                    varianttitle="h6"
                                     title="Educo"
 
                                     variantbody="body2"
@@ -46,30 +42,31 @@ export default function LandingPage(params) {
                                             And currently, it includes a C++ programming language-based code compiler. 
                                             So go ahead, explore your experience and create your best code."
                                 />
-                            </Grid>
-                            <Grid item xs={5}>
-                                <CardImage
-                                    component="img"
-                                    alt="Content"
-                                    src={Content}
-                                />
-                                <br/>
-                                <Button 
-                                    variant="contained" 
-                                    size="large"
-                                    fullWidth
-                                    sx={{
-                                        color: "ButtonShadow",
-                                        bgcolor: "blue",
-                                        fontFamily: "cursive",
-                                        fontSize: 20
-                                    }}
-                                    onClick={() => navigate ("/login")}>
-                                    Get Started
-                                </Button>
-                            </Grid>
+                                <Box sx={{
+                                    display: 'flex', 
+                                    flexDirection:'column',
+                                }}>
+                                    <CardImage
+                                        component="img"
+                                        alt="Content"
+                                        src={Content}
+                                    />
+                                    <br/>
+                                    <Button 
+                                        variant="contained" 
+                                        size="large"
+                                        fullWidth
+                                        sx={{
+                                            color: "ButtonShadow",
+                                            bgcolor: "blue",
+                                            fontFamily: "cursive",
+                                            fontSize: 20
+                                        }}
+                                        onClick={() => navigate ("/login")}>
+                                        Get Started
+                                    </Button>
+                                </Box>
                         </Box>
-                        </Grid>
                     </Container>
                 </ThemeProvider>
             </div>
