@@ -1,13 +1,14 @@
 import { ThemeProvider } from '@emotion/react'
 import React from 'react'
 import TopAppBar from '../../components/Navbar/TopAppBar'
-import { Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from '@mui/material'
+import { Button, Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from '@mui/material'
 import { theme } from '../../utils/ThemeProvider'
 import { dataAssignmentCard } from './DataAssignmentCard'
 import BottomAppBar from '../../components/Navbar/BottomAppBar'
 import SampleAssignment from './SampleAssignment'
 
 export default function Assignment() {
+  
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar/>
@@ -38,6 +39,11 @@ export default function Assignment() {
                   />
                   <CardContent>
                     {item.description}
+                    <Button
+                      type='button'
+                      variant='text'
+                      sx={{ mt: 3, mb: 2 }}
+                    />
                   </CardContent>
                 </Card>
               </Grid>

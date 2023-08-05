@@ -12,7 +12,6 @@ export default function LandingPage(params) {
 
     return (
         <div className="main">
-            <div className="overlay"></div>
             <div className="content">
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="lg" >
@@ -51,20 +50,40 @@ export default function LandingPage(params) {
                                         alt="Content"
                                         src={Content}
                                     />
-                                    <br/>
-                                    <Button 
-                                        variant="contained" 
-                                        size="large"
-                                        fullWidth
-                                        sx={{
-                                            color: "ButtonShadow",
-                                            bgcolor: "blue",
-                                            fontFamily: "cursive",
-                                            fontSize: 20
-                                        }}
-                                        onClick={() => navigate ("/login")}>
-                                        Get Started
-                                    </Button>
+                                    <Box sx={{ 
+                                        display: "flex", 
+                                        flexDirection: 'row', 
+                                        '& > :not(style)': {
+                                            m: 1,
+                                        },
+                                    }}>
+                                        <Button 
+                                            variant="contained" 
+                                            size="large"
+                                            fullWidth
+                                            sx={{
+                                                color: "ButtonShadow",
+                                                bgcolor: "blue",
+                                                fontFamily: "cursive",
+                                                fontSize: 20
+                                            }}
+                                            onClick={() => navigate ("/login")}>
+                                            Get Started
+                                        </Button>
+                                        <Button 
+                                            variant="contained" 
+                                            size="large"
+                                            fullWidth
+                                            sx={{
+                                                color: "ButtonShadow",
+                                                bgcolor: "blue",
+                                                fontFamily: "cursive",
+                                                fontSize: 20
+                                            }}
+                                            onClick={() => navigate ("/register")}>
+                                            Sign Up
+                                        </Button>
+                                    </Box>
                                 </Box>
                         </Box>
                     </Container>

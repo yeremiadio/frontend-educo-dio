@@ -3,6 +3,7 @@ import CodingPage from "../page/coding/CodingPage";
 import Archive from "../page/archive/Archive";
 import Materi from "../page/materi/Materi";
 import Assignment from "../page/assignment/Assignment";
+import Profile from "../page/profile";
 
 export const ListRoutes = [
     
@@ -25,5 +26,9 @@ export const ListRoutes = [
     {
         path: "/archive",
         element: <Archive />
+    },
+    {
+        path: "/profile",
+        element: <Profile />
     },
 ]

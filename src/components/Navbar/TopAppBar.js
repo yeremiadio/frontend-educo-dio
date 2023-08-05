@@ -1,16 +1,40 @@
-import { AppBar, ThemeProvider, Toolbar, Typography } from '@mui/material';
-import React from 'react';
-import Buttons from '../../components/Buttons/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { AppBar, Button, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
 import NavigationDrawer from '../../components/Navbar/DrawerNavigation';
 import { theme } from "../../utils/ThemeProvider";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../utils/slices/auth';
+import eventBus from '../../utils/common/eventBus';
+import { Navigate } from 'react-router-dom'; 
 
 export default function TopAppBar() {
-  const navigate = useNavigate(); 
-  const location = useLocation();
-  const userLogin = location.state.user;
+  const [showGuruBoard, setShowGuruBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
 
-  console.log(location);
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const logOut = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (currentUser) {
+      setShowGuruBoard(currentUser.roles.includes("ROLE_GURU"));
+      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+    } else {
+      setShowGuruBoard(false);
+      setShowAdminBoard(false);
+    }
+
+    eventBus.on("logout", () => {
+      logOut();
+    });
+
+    return () => {
+      eventBus.remove("logout");
+    };
+  }, [currentUser, logOut]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -18,12 +42,14 @@ export default function TopAppBar() {
         <Toolbar>
           <NavigationDrawer/>
           <Typography variant="h6" noWrap sx={{flexGrow: 1}}>Educo</Typography>
-          <Typography variant="h7" no Wrap sx={{marginRight: 5}}>Welcome, {userLogin}</Typography>
-          <Buttons
-            label= "Log Out"
-            variant= "outlined"
-            onClick= {() => navigate("/",{state:null})}
-          />
+          {currentUser && (
+          <><Typography variant="h7" no Wrap sx={{ marginRight: 5 }}>Welcome, <Navigate to="/profile">{currentUser.username}</Navigate></Typography>
+            <Button className="nav-item">
+              <a href="/" className="nav-link" onClick={logOut}>
+                LogOut
+              </a>
+            </Button>
+          </>)}
         </Toolbar>
       </AppBar>
     </ThemeProvider>

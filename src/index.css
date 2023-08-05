@@ -37,3 +37,12 @@ img {
   height: 100%;
   background-color: rgba(0, 0, 0, .2);
 }
+
+.form-group{
+	/*membuat lebar form penuh*/
+	box-sizing : border-box;
+	width: 100%;
+	padding: 10px;
+	font-size: 11pt;
+	margin-bottom: 20px;
+}
