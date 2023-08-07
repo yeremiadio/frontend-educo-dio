@@ -1,37 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-
 import { register } from "../utils/slices/auth";
 import { clearMessage } from "../utils/slices/message";
 import { theme } from "../utils/ThemeProvider";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Button, Container, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { registerSchema } from "../utils/schemas";
 
 
-const validationSchema = Yup.object().shape({
-    username: Yup.string()
-    .test(
-        "len",
-        "The username must be between 3 and 20 characters.",
-        (val) =>
-        val && val.toString().length >= 3 && val.toString().length <= 20
-    )
-    .required("This field is required!"),
-    email: Yup.string()
-    .email("This is not a valid email.")
-    .required("This field is required!"),
-    password: Yup.string()
-    .test(
-        "len",
-        "The password must be between 6 and 40 characters.",
-        (val) =>
-        val && val.toString().length >= 6 && val.toString().length <= 40
-    )
-    .required("This field is required!"),
-});
 
 const Register = () => {
     let navigate = useNavigate();
@@ -50,14 +28,16 @@ const Register = () => {
             username: "",
             email: "",
             password: "",
+            confirmPassword: "",
+            roles: "",
         },
-        validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            const { username, email, password } = values;
+        validationSchema: registerSchema,
+        onSubmit: (values) => {
+            const { username, email, password, roles } = values;
     
             setSuccessful(false);
     
-            dispatch(register({ username, email, password }))
+            dispatch(register({ username, email, password, roles }))
             .unwrap()
             .then(() => {
                 setSuccessful(true);
@@ -114,7 +94,20 @@ const Register = () => {
                             type={isShowPassword ? "text" : "password"}
                             sx={{marginTop: 2, marginLeft: 2, marginBottom: 2}}
                         />
-                        <div style={{ position: "absolute", right: 20, top: 33, cursor: "pointer" }}
+                        <TextField 
+                            fullWidth
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            value={formik.values.confirmPassword}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                            type={isShowPassword ? "text" : "password"}
+                            sx={{marginTop: 2, marginLeft: 2, marginBottom: 2}}
+                        />
+                        <div style={{ position: "absolute", right: 10, top: 33, cursor: "pointer" }}
                             onClick={() => setIsShowPassword(!isShowPassword)} 
                         >
                             {isShowPassword ? (
@@ -124,6 +117,24 @@ const Register = () => {
                             )}
                         </div>
                     </div>
+                    <Select
+                        fullWidth
+                        id="roles"
+                        name="roles"
+                        value={formik.values.roles}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.roles && Boolean(formik.errors.roles)}
+                        helperText={formik.touched.roles && formik.errors.roles}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        sx={{ margin: 2 }}
+                    >
+                        <MenuItem value=""><strong><em>Please Select your Status!</em></strong></MenuItem>
+                        <MenuItem value="siswa">Siswa</MenuItem>
+                        <MenuItem value="guru">Guru</MenuItem>
+                        <MenuItem value="admin" disabled>Admin</MenuItem>
+                    </Select>
                     <Button fullWidth type="submit" variant="contained" sx={{margin: 2}}>Sign Up</Button>
                 </form>
                 {message && (

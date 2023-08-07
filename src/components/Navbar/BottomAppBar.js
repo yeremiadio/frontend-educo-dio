@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 export default function BottomAppBar() {
     let navigate = useNavigate();
     return (
-        <AppBar position='relative' color='transparent' sx={{top: 'auto', bottom: 0 }}>
+        <AppBar position='relative' color='transparent'  sx={{top: 'auto', bottom: 0, flexGrow: 1 }}>
             <Toolbar>
-                <Copyright/>
-                <Button onClick={() => navigate(-1)} >Back</Button>
+                <Copyright />
+                <Button variant='contained' onClick={() => navigate(-1)} sx={{ marginLeft: 5 }} >Back</Button>
             </Toolbar>
         </AppBar>
     )

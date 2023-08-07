@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Archive, Assignment, Book, Dashboard, Home, MenuOpen } from '@mui/icons-material';
+import { AccountTree, Archive, Assignment, Book, Dashboard, Home, MenuOpen } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ export default function NavigationDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-          <ListItem disablePadding onClick={() => navigate("/dashboard",{state: true  })}>
+          <ListItem disablePadding onClick={() => navigate("/dashboard")}>
             <ListItemButton>
               <ListItemIcon>
                 <Dashboard />
@@ -49,7 +49,7 @@ export default function NavigationDrawer() {
               <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => navigate("/materi",{state: true  })}>
+          <ListItem disablePadding onClick={() => navigate("/materi")}>
             <ListItemButton>
               <ListItemIcon>
                 <Book />
@@ -57,7 +57,7 @@ export default function NavigationDrawer() {
               <ListItemText primary="Materi" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => navigate("/assignment",{state: true  })}>
+          <ListItem disablePadding onClick={() => navigate("/assignment")}>
             <ListItemButton>
               <ListItemIcon>
                 <Assignment />
@@ -65,7 +65,7 @@ export default function NavigationDrawer() {
               <ListItemText primary="Assignment" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => navigate("/codingpage",{state: true  })}>
+          <ListItem disablePadding onClick={() => navigate("/codingpage")}>
             <ListItemButton>
               <ListItemIcon>
                 <Home />
@@ -73,7 +73,7 @@ export default function NavigationDrawer() {
               <ListItemText primary="Coding Page" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => navigate("/archive",{state: true  })}>
+          <ListItem disablePadding onClick={() => navigate("/archive")}>
             <ListItemButton>
               <ListItemIcon>
                 <Archive />
@@ -83,6 +83,16 @@ export default function NavigationDrawer() {
           </ListItem>
       </List>
       <Divider />
+      <List>
+          <ListItem disablePadding onClick={() => navigate("/profile")}>
+            <ListItemButton>
+              <ListItemIcon>
+                <AccountTree/>
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItemButton>
+          </ListItem>
+      </List>
     </Box>
   );
 

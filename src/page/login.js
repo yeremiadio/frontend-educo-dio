@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
-
 import { login } from "../utils/slices/auth";
 import { clearMessage } from "../utils/slices/message";
 import { theme } from "../utils/ThemeProvider";
 import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import Copyright from "../utils/Copyright";
+import { loginSchema } from "../utils/schemas";
 
-const validationSchema = Yup.object().shape({
-    username: Yup
-    .string("Enter your Username!")
-    .required("This field is required!"),
-    password: Yup
-    .string("Enter your Password!")
-    .min(6, "Password minimum 8 character!")
-    .required("This field is required!"),
-});
+
 
 const Login = () => {
     let navigate = useNavigate();
@@ -38,7 +29,7 @@ const Login = () => {
             username: "",
             password: "",
         },
-        validationSchema : validationSchema,
+        validationSchema : loginSchema,
         onSubmit : (values) => {
             const { username, password } = values;
             setLoading(true);

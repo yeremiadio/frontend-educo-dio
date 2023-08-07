@@ -5,7 +5,6 @@ import { theme } from "../../utils/ThemeProvider";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../utils/slices/auth';
 import eventBus from '../../utils/common/eventBus';
-import { Navigate } from 'react-router-dom'; 
 
 export default function TopAppBar() {
   const [showGuruBoard, setShowGuruBoard] = useState(false);
@@ -43,9 +42,9 @@ export default function TopAppBar() {
           <NavigationDrawer/>
           <Typography variant="h6" noWrap sx={{flexGrow: 1}}>Educo</Typography>
           {currentUser && (
-          <><Typography variant="h7" no Wrap sx={{ marginRight: 5 }}>Welcome, <Navigate to="/profile">{currentUser.username}</Navigate></Typography>
-            <Button className="nav-item">
-              <a href="/" className="nav-link" onClick={logOut}>
+          <><Typography variant="h6" no Wrap sx={{ marginRight: 5 }}><strong>Welcome, {currentUser.username}</strong></Typography>
+            <Button variant="outlined" >
+              <a href="/" onClick={logOut}>
                 LogOut
               </a>
             </Button>
