@@ -33,9 +33,5 @@ export const registerSchema = Yup.object().shape({
     confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Password must match.")
     .required("This field is required!"),
-    roles:Yup
-    .string()
-    .oneOf([ "siswa", "guru", "admin" ], "Please Select your Status!")
-    .required("This field is required!"),
 });
 

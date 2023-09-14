@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Container, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerSchema } from "../utils/schemas";
+import { useUserContext } from "../utils/UserContext";
 
 
 
@@ -15,8 +16,10 @@ const Register = () => {
     let navigate = useNavigate();
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [successful, setSuccessful] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { message } = useSelector((state) => state.message);
+    const { userUpdateRole } = useUserContext;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,15 +32,16 @@ const Register = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            roles: "",
+            roles: "siswa", //Default user role.
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            const { username, email, password, roles } = values;
+            const { username, email, password } = values;
+            setLoading(true);
     
             setSuccessful(false);
     
-            dispatch(register({ username, email, password, roles }))
+            dispatch(register({ username, email, password }))
             .unwrap()
             .then(() => {
                 setSuccessful(true);
@@ -45,7 +49,9 @@ const Register = () => {
             })
             .catch(() => {
                 setSuccessful(false);
+                setLoading(false);
             });
+            userUpdateRole(values.roles);
         },
     });
 
@@ -135,7 +141,7 @@ const Register = () => {
                         <MenuItem value="guru">Guru</MenuItem>
                         <MenuItem value="admin" disabled>Admin</MenuItem>
                     </Select>
-                    <Button fullWidth type="submit" variant="contained" sx={{margin: 2}}>Sign Up</Button>
+                    <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{margin: 2}}>Sign Up</Button>
                 </form>
                 {message && (
                     <div className="form-group">

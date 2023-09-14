@@ -14,7 +14,7 @@ const Profile = () => {
     return (
         <div className="main">
             <div className="content">
-                <Card sx={{ bgcolor: "transparent", color: "white" }}>
+                <Card sx={{ bgcolor: "whitesmoke", color: "black" }}>
                     <CardHeader
                         avatar={
                             <Avatar sx={{ bgcolor: "darkblue" }} aria-label="Ava" >{currentUser.id}</Avatar>

@@ -15,9 +15,9 @@ export default function LandingPage(params) {
             <div className="content">
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="lg" >
-                        <Box display="flex" flexDirection="column">
+                        <Box display="flex" flexDirection="column" >
                             <h1>Welcome Codingers,</h1>
-                            <h3>to Our Web Education Coding.</h3>
+                            <h3>to Our Web Education Code.</h3>
                         </Box>
                         <Box sx={{
                             display: 'flex',
