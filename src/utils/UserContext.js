@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const UserContext = createContext(); //Context baru untuk pengelolaan data pengguna
@@ -6,12 +7,11 @@ export const UserProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        fetch('api/test/all')
+        
         setTimeout(() => {
-            const Data = {
-                username: '',
-                roles: ''
-            }
+            const Data = () => {
+                return axios.get('api/test/all')
+            };
             setUserData(Data);
         }, 1000);
     }, []);
