@@ -32,7 +32,7 @@ function EditorCode() {
       userInput: userInput,
     };
     await axios
-      .post(`http://localhost:8000/compile`, data)
+      .post(`http://localhost:8080/compile`, data)
       .then((res) => {
         console.log(res);
         setLoading(false);
