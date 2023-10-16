@@ -40,7 +40,7 @@ export default function TopAppBar() {
       <AppBar position='static' color='transparent'>
         <Toolbar>
           <NavigationDrawer/>
-          <Typography variant="h6" noWrap sx={{flexGrow: 1}}>Educo</Typography>
+          <Typography variant="h6" component="animateTransform" noWrap sx={{flexGrow: 1}}><strong>Educo</strong></Typography>
           {currentUser && (
           <><Typography variant="h6" no Wrap sx={{ marginRight: 5 }}><strong>Welcome, {currentUser.username}</strong></Typography>
             <Button variant="outlined" >

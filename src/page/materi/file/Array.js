@@ -16,7 +16,7 @@ export default function Array() {
                 <Typography variant='h4' gutterBottom># Definisi Array</Typography>
                 <Box sx={{marginLeft: 4}}>
                     Sekelompok data yang mendeskripsikan sesuatu yang sejenis dan 
-                    disimpan ke dalam variabel dengan nama yang sama. Kumpukan data 
+                    disimpan ke dalam variabel dengan nama yang sama. Kumpulan data 
                     yang setiap elemen datanya bertipe sama.<br/><br/>
                     Ada dua macam array yaitu :<br/>
                     a. Array satu dimensi :<br/>

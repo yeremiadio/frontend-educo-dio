@@ -33,5 +33,8 @@ export const registerSchema = Yup.object().shape({
     confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Password must match.")
     .required("This field is required!"),
+    roles: Yup.string()
+    .oneOf(["1","2","3"])
+    .required("This field is required!"),
 });
 

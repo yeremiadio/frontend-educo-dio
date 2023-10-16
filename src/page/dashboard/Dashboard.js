@@ -36,7 +36,8 @@ export default function Dashboard() {
                     sx={{fontStyle: "initial", fontFamily: "monospace"}}
                   />
                   <CardContent>
-                  {item.description}
+                    {item.image}
+                  <Typography>{item.description}</Typography>
                   </CardContent>
                 </Card>
               </Grid>

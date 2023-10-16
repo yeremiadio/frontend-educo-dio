@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react"; 
+import { useDispatch, useSelector } from "react-redux"; 
 import { useFormik } from "formik";
 import { register } from "../utils/slices/auth";
 import { clearMessage } from "../utils/slices/message";
@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Container, MenuItem, Select, TextField, ThemeProvider, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerSchema } from "../utils/schemas";
-import { useUserContext } from "../utils/UserContext";
 
 
 
@@ -19,7 +18,6 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
 
     const { message } = useSelector((state) => state.message);
-    const { userUpdateRole } = useUserContext;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,16 +30,16 @@ const Register = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            roles: "siswa", //Default user role.
+            roleId: "", //Default user role.
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            const { username, email, password } = values;
+            const { username, email, password, roleId } = values;
             setLoading(true);
     
             setSuccessful(false);
     
-            dispatch(register({ username, email, password }))
+            dispatch(register({ username, email, password, roleId }))
             .unwrap()
             .then(() => {
                 setSuccessful(true);
@@ -51,7 +49,6 @@ const Register = () => {
                 setSuccessful(false);
                 setLoading(false);
             });
-            userUpdateRole(values.roles);
         },
     });
 
@@ -133,13 +130,13 @@ const Register = () => {
                         error={formik.touched.roles && Boolean(formik.errors.roles)}
                         helperText={formik.touched.roles && formik.errors.roles}
                         displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
+                        inputProps={{ 'aria-label': 'Without label' }} 
                         sx={{ margin: 2 }}
                     >
                         <MenuItem value=""><strong><em>Please Select your Status!</em></strong></MenuItem>
-                        <MenuItem value="siswa">Siswa</MenuItem>
-                        <MenuItem value="guru">Guru</MenuItem>
-                        <MenuItem value="admin" disabled>Admin</MenuItem>
+                        <MenuItem value="1">Siswa</MenuItem>
+                        <MenuItem value="2">Guru</MenuItem>
+                        <MenuItem value="3" disabled>Admin</MenuItem>
                     </Select>
                     <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{margin: 2}}>Sign Up</Button>
                 </form>
