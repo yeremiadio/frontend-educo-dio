@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Container, Divider, Grid, ThemeProvider, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, CardMedia, Container, Divider, Grid, ThemeProvider, Typography } from '@mui/material';
 import React from 'react';
 import { theme } from "../../utils/ThemeProvider";
 import { WavingHand } from '@mui/icons-material';
@@ -29,14 +29,18 @@ export default function Dashboard() {
           {dataDashboard.map((item, index) => {
             return (
               <Grid item key={index} lg={4} md={4} sm={4} xs={12}>
-                <Card>
+                <Card variant='outlined' >
                   <CardHeader
                     title={item.title}
                     titleTypographyProps={{ align: "center" }}
                     sx={{fontStyle: "initial", fontFamily: "monospace"}}
                   />
+                  <CardMedia
+                    component="img"
+                    image={item.image}
+                    alt={item.title}
+                  />
                   <CardContent>
-                    {item.image}
                   <Typography>{item.description}</Typography>
                   </CardContent>
                 </Card>
