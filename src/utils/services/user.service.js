@@ -6,7 +6,7 @@ const getPublicContent = () => {
     return axios.get(API_URL + "all");
 };
 
-const getUserBoard = () => {
+const getSiswaBoard = () => {
     return axios.get(API_URL + "siswa");
 };
 
