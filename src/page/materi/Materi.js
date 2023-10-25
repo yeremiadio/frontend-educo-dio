@@ -29,6 +29,7 @@ export default function Materi() {
                     item3 = "Percabangan"
                     item4 = "Perulangan"
                     item5 = "Array"
+                    item6 = "Full Tutorial"
                 />
             </Container>
             </div>

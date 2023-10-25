@@ -20,7 +20,7 @@ export default function Percabangan() {
             </Typography>
             <br />
             <br />
-            <Typography variant='h4' gutterBottom># Definisi Prcabangan.</Typography>
+            <Typography variant='h4' gutterBottom># Definisi Percabangan.</Typography>
             <Box sx={{marginLeft: 4}}>
                 <Typography variant='h6' align='justify'>
                     Percabangan adalah suatu pemilihan statemen yang akan dieksekusi 

@@ -4,12 +4,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import TipeData from './file/TipeData';
-import Operator from './file/Operator';
-import Percabangan from './file/Percabangan';
-import Perulangan from './file/Perulangan';
-import Array from './file/Array';
-import FullTutorial from './file/FullTutorial';
+import AssignmentsVT from './fileassignment/AssignmentsVT';
+import AssignmentsOp from './fileassignment/AssignmentsOp';
+import AssignmentsPerulangan from './fileassignment/AssignmentsPerulangan';
+import AssignmentsPercabangan from './fileassignment/AssignmentsPercabangan';
+import AssignmentsArray from './fileassignment/AssignmentsArray';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -44,7 +43,7 @@ function a11yProps(index) {
     };
 }
 
-export default function MateriContent (props) {
+export default function AssignmentContent (props) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -66,26 +65,22 @@ export default function MateriContent (props) {
             <Tab label={props.item3} {...a11yProps(2)} />
             <Tab label={props.item4} {...a11yProps(3)} />
             <Tab label={props.item5} {...a11yProps(4)} />
-            <Tab label={props.item6} {...a11yProps(5)} />
             </Tabs>
         </Box>
         <TabPanel value={value} index={0} >
-            <TipeData/>
+            <AssignmentsVT/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-            <Operator/>
+            <AssignmentsOp/>
         </TabPanel>
         <TabPanel value={value} index={2}>
-            <Percabangan/>
+            <AssignmentsPerulangan/>
         </TabPanel>
         <TabPanel value={value} index={3}>
-            <Perulangan/>
+            <AssignmentsPercabangan/>
         </TabPanel>
         <TabPanel value={value} index={4}>
-            <Array/>
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-            <FullTutorial/>
+            <AssignmentsArray/>
         </TabPanel>
         </Box>
     );

@@ -1,11 +1,10 @@
 import { ThemeProvider } from '@emotion/react'
 import React from 'react'
 import TopAppBar from '../../components/Navbar/TopAppBar'
-import { Button, Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from '@mui/material'
+import { Container, Divider, Typography } from '@mui/material' 
 import { theme } from '../../utils/ThemeProvider'
-import { dataAssignmentCard } from './DataAssignmentCard'
 import BottomAppBar from '../../components/Navbar/BottomAppBar'
-import SampleAssignment from './SampleAssignment'
+import AssignmentContent from './AssignmentContent'
 
 export default function Assignment() {
   
@@ -23,34 +22,15 @@ export default function Assignment() {
           }
         </Typography>
       </Container>
-      <Divider />
-      <br/>
-      <SampleAssignment/>
-      <br/>
       <Divider/>
-      <Container component={"main"} maxWidth="md" sx={{ pt: 5, pb: 6 }}>
-        <Grid container spacing={5} alignItems="flex-end">
-          {dataAssignmentCard.map((item,index) =>{
-            return (
-              <Grid item key={index} lg={4} md={4} sm={4} xs={12}>
-                <Card>
-                  <CardHeader
-                    title={item.title}
-                  />
-                  <CardContent>
-                    {item.description}
-                    <Button
-                      type='button'
-                      variant='text'
-                      sx={{ mt: 3, mb: 2 }}
-                    />
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })
-          }
-        </Grid>
+      <Container component={"main"} maxWidth="lg" sx={{margin: 2}}>
+        <AssignmentContent
+          item1 = "Variabel dan Tipe Data"
+          item2 = "Operator"
+          item3 = "Perulangan"
+          item4 = "Percabangan"
+          item5 = "Array"
+        />
       </Container>
       </div>
       <BottomAppBar/>

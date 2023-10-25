@@ -86,8 +86,9 @@ export default function TipeData() {
                                 <br/>Contoh sintax dasarnya : <b>boolean value = true;</b>
                             </Box>
                     </Box>
+                    <iframe className='mx-auto rounded-lg' width='100%' height='500' src='https://www.jdoodle.com/embed/v0/5F87' title='Contoh Tutorial' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
                 </Box>
             </Typography>
-            </>
+        </>
     )
 }

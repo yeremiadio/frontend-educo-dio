@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, Container, Divider, Grid, Typography } f
 import { theme } from '../../utils/ThemeProvider'
 import { SafetyDividerTwoTone } from '@mui/icons-material'
 import { Archivefilecard } from './Archivefilecard'
-import StickyHeadTable from '../../components/Table/StickyHeadTable'
 import TopAppBar from '../../components/Navbar/TopAppBar'
 import BottomAppBar from '../../components/Navbar/BottomAppBar'
+import TabelAssignments from '../../components/Table/TabelAssignments'
 
 export default function Archive() {
   return (
@@ -50,7 +50,7 @@ export default function Archive() {
           </Typography>
         </Container>
         <Container component={'main'} maxWidth="md" sx={{margin: 2}}>
-          <StickyHeadTable/>
+          <TabelAssignments/>
         </Container>
       </div>
       <BottomAppBar/>

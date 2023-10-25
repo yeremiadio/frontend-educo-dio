@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 
-export default function AssignmentsVT() {
+export default function FullTutorial() {
     return (
         <>
             <Typography variant='h4' fontFamily="serif">
-                Assignments C++ - Variabel & Tipe Data.
+                Materi C++ - Full Tutorial.
             </Typography>
             <Typography variant='h7' fontStyle="italic" color="gray" gutterBottom>
                 Date of Post Sample
@@ -14,7 +14,7 @@ export default function AssignmentsVT() {
             <br />
             <Typography variant='h6' align='justify'>
                 <Box sx={{marginLeft: 4}}>
-                  <iframe title='Variabel dan Tipe Data' src="https://docs.google.com/forms/d/e/1FAIpQLSd8kRjn9W9NOF7oLtS5V3kfgqlh5Viuz8dIvn9wGtBK4O3tIA/viewform?embedded=true" width="1000" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                <iframe width="1000" height="500" src="https://www.youtube.com/embed/videoseries?si=fK7BkFH4EgOHfuX_&amp;list=PLZS-MHyEIRo4Ze0bbGB1WKBSNMPzi-eWI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </Box>
             </Typography>
         </>
