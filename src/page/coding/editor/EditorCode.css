@@ -1,5 +1,5 @@
 .EditorCode {
-    max-height: 100vh;
+    max-height: 110vh;
     width: 100%;
     overflow-y: hidden;
     background-color: #474747;
@@ -109,11 +109,36 @@ h4 {
         color: grey;
         cursor: not-allowed;
     }
-    border-radius: 4px;
+    border-radius: 10px;
     transition: 0.3s;
     cursor: pointer;
 }
 
 .run-btn:active {
     background-color: #6e9427;
+}
+
+.save-btn {
+    position: absolute;
+    margin-right: 90px;
+    bottom: 10px;
+    right: 18px;
+    width: 80px;
+    height: 40px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #afec3f;
+    border: none;
+    &:disabled {
+        background-color: #616161;
+        color: grey;
+        cursor: not-allowed;
+    }
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.save-btn:active {
+    background-color: #0471ff;
 }

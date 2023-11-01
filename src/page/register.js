@@ -30,16 +30,16 @@ const Register = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            roleId: "", //Default user role.
+            roles: "", //Default user role.
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
-            const { username, email, password, roleId } = values;
+            const { username, email, password, roles } = values;
             setLoading(true);
     
             setSuccessful(false);
     
-            dispatch(register({ username, email, password, roleId }))
+            dispatch(register({ username, email, password, roles }))
             .unwrap()
             .then(() => {
                 setSuccessful(true);
@@ -134,9 +134,9 @@ const Register = () => {
                         sx={{ margin: 2 }}
                     >
                         <MenuItem value=""><strong><em>Please Select your Status!</em></strong></MenuItem>
-                        <MenuItem value="1">Siswa</MenuItem>
-                        <MenuItem value="2">Guru</MenuItem>
-                        <MenuItem value="3" disabled>Admin</MenuItem>
+                        <MenuItem value="siswa">Siswa</MenuItem>
+                        <MenuItem value="guru">Guru</MenuItem>
+                        <MenuItem value="admin">Admin</MenuItem>
                     </Select>
                     <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{margin: 2}}>Sign Up</Button>
                 </form>

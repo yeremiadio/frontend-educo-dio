@@ -5,6 +5,27 @@ import AuthService from "../services/auth.service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
+
+export const saveCode = createAsyncThunk(
+    "auth/save-compile",
+    async ({ code, userInput }, thunkAPI) => {
+      try {
+        const response = await AuthService.saveCode(code, userInput);
+        const message = response.data.message;
+        thunkAPI.dispatch(setMessage(message));
+        return response.data;
+      } catch (error) {
+        const message =
+          (error.response?.data?.message) ||
+          error.message ||
+          error.toString();
+        thunkAPI.dispatch(setMessage(message));
+        throw error; // Re-throw the error to be captured by the .rejectWithValue() method
+      }
+    }
+  );
+  
+
 export const register = createAsyncThunk(
     "auth/register",
     async ({ username, email, password, roleId }, thunkAPI) => {

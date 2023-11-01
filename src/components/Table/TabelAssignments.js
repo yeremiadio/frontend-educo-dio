@@ -6,8 +6,6 @@ import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead,
 const TabelAssignments = () => {
     const [data, setData] = useState([]); 
 
-    //const url = 'http://localhost:8080/';
-
     useEffect(() => {
         axios.get('http://localhost:8080/assignments')
         .then((response) => {

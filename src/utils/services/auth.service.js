@@ -2,6 +2,13 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/auth/";
 
+const saveCode = (code, userInput) => {
+    return axios.post("http://localhost:3000/save-compile", {
+        code,
+        userInput,
+    });
+};
+
 const register = (username, email, password, roles) => {
     return axios.post(API_URL + "signup", {
         username,
@@ -37,11 +44,17 @@ const getCurrentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
 };
 
+const getCurrentCode = () => {
+    return JSON.parse(localStorage.getItem("codes"));
+};
+
 const AuthService = {
     register,
     login,
     logout,
+    saveCode,
     getCurrentUser,
+    getCurrentCode,
 }
 
 export default AuthService;
