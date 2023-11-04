@@ -7,8 +7,9 @@ import spinner from "./Eclipse-1s-200px.svg";
 import { useDispatch } from "react-redux";
 import { clearMessage } from "../../../utils/slices/message";
 import Popup from "../../../components/PopUp/PopUp";
+import { Button } from "@mui/material";
 
-function EditorCode() {
+function EditorCode({ selectedCodeId, onClearCode }) {
   const [userCode, setUserCode] = useState("");
   const [userLang, setUserLang] = useState("");
   const [userTheme, setUserTheme] = useState("vs-dark");
@@ -58,8 +59,14 @@ function EditorCode() {
 
   const handleSaveCode = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/save-compile', { name, userCode, userInput }); // Ganti userId dengan yang sesuai
-      console.log('Saved code:', response.data);
+      if (selectedCodeId) {
+        // Update code yang dipilih
+        await axios.put(`/api/codes/${selectedCodeId}`, { name, userCode, userInput });
+      } else {
+        // Simpan code baru jika tidak ada id yang terpilih
+        await axios.post('http://localhost:8080/save-compile', { name, userCode, userInput });
+      } // Ganti userId dengan yang sesuai
+      console.log('Successfully saved code.');
       setShowPopup(true);
     } catch (error) {
       console.error('Failed to save code:', error);
@@ -68,6 +75,32 @@ function EditorCode() {
   const closePopup = () => {
     setShowPopup(false);
   };
+
+  useEffect(() => {
+    if (selectedCodeId) {
+      //Mengambil Code yang telah tersimpan
+      async function fetchCode() {
+        try {
+          const response = await axios.get(`api/codes/${selectedCodeId}`);
+          const { name, userCode, userInput } = response.data;
+          setName(name);
+          setUserCode(userCode);
+          setUserInput(userInput);
+        } catch (error) {
+          console.error('Failed to fetch code :', error);
+        }
+      }
+      fetchCode();
+    }
+  }, [selectedCodeId]);
+
+  const handleClearEditor = () => {
+    setName("");
+    setUserCode("#Enter your Code here.");
+    setUserInput("");
+    onClearCode();
+  };
+
   // Clear messages on component mount
   useEffect(() => {
     dispatch(clearMessage());
@@ -88,7 +121,8 @@ function EditorCode() {
           placeholder="File Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-        />
+      />
+      <Button variant="text" onClick={handleClearEditor} sx={{ marginLeft: 2, fontFamily: 'cursive'}}>Clear Editor</Button>
       <div className="main-code">
         <div className="left-container">
           <Editor

@@ -1,9 +1,9 @@
 // CodeList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import { Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 
-function ListCodes() {
+function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
     const [codes, setCodes] = useState([]);
 
     useEffect(() => {
@@ -17,14 +17,40 @@ function ListCodes() {
         }
     
         fetchCodes();
+
+        // lakukan polling untuk refresh data
+        // const pollingInterval = setInterval(fetchCodes, 5000);
+
+        // return () => {
+        //     clearInterval(pollingInterval);
+        // };
     }, []);
+
+    const handleCodeDelete = async() => {
+        try {
+
+            if (onDeleteCode) {
+                // Penanganan Berhasil
+                await axios.delete(`api/codes/${onDeleteCode}`);
+                console.log('Delete Code success.');
+                codeId();
+            }
+        } catch (error) {
+            console.error('Failed to delete Code : ', error);
+        }
+    };
 
     return (
         <div>
             <Grid container spacing={3}>
             {codes.map((Code) => (
-            <Grid item key={Code.id} lg={4} md={4} sm={4} xs={12}>
-                <Card variant='outlined'>
+            <Grid item key={Code.id} lg={4} md={4} sm={4} xs={12} auto >
+                <Card 
+                    variant='outlined' 
+                    onClick={() => onCodeSelect(Code.id)} 
+                    style={{ cursor: 'pointer', }} 
+                    sx={{ height: '150px' }}
+                >
                     <CardContent>
                         <Typography variant='h5' fontStyle={'normal'} fontFamily={'fantasy'}>{Code.name}</Typography>
                         <Divider/>
@@ -36,6 +62,13 @@ function ListCodes() {
             </Grid>
             ))}
             </Grid>
+            <br/>
+            <Button 
+                variant="contained" 
+                onClick={handleCodeDelete}
+                sx={{ marginBottom: 2, fontFamily: 'cursive'}}>
+                    Delete
+            </Button>
         </div>
     );
 }

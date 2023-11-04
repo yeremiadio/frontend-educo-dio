@@ -6,8 +6,22 @@ import { theme } from '../../utils/ThemeProvider'
 import BottomAppBar from '../../components/Navbar/BottomAppBar'
 import EditorCode from './editor/EditorCode'
 import ListCodes from './ListCodes'
+import { useState } from 'react'
 
 export default function CodingPage() {
+  const [selectedCodeId, setSelectedCodeId] = useState(null);
+
+  const onCodeSelect = (codeId) => {
+    setSelectedCodeId(codeId);
+    console.log('Selected code ID :', codeId);
+  };
+
+  const handleClearEditor = () => {
+    //Membersihkan isi editor dan ID yang disorot
+    setSelectedCodeId(null);
+    console.log('Clear success.');
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar/>
@@ -23,7 +37,7 @@ export default function CodingPage() {
         </Typography>
       </Container>
       <Container component={"main"} maxWidth="lg" sx={{ margin: 2 }}>
-        <EditorCode/>
+        <EditorCode selectedCodeId={selectedCodeId} onClearCode={handleClearEditor}/>
       </Container>
       <Container component={"main"} maxWidth="md">
         <Paper sx={{ backgroundColor:'darkgrey' }}>
@@ -32,7 +46,7 @@ export default function CodingPage() {
           </Typography>
           <Divider sx={{margin: 2}}/>
           <Box margin={2}>
-            <ListCodes/>
+            <ListCodes onCodeSelect={onCodeSelect} onDeleteCode={selectedCodeId} codeId={handleClearEditor}/>
           </Box>
         </Paper>
       </Container>
