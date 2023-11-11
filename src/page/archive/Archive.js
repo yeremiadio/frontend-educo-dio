@@ -1,14 +1,22 @@
 import { ThemeProvider } from '@emotion/react'
 import React from 'react'
-import { Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from '@mui/material'
+import { Container, Divider, Typography } from '@mui/material'
 import { theme } from '../../utils/ThemeProvider'
 import { SafetyDividerTwoTone } from '@mui/icons-material'
-import { Archivefilecard } from './Archivefilecard'
 import TopAppBar from '../../components/Navbar/TopAppBar'
 import BottomAppBar from '../../components/Navbar/BottomAppBar'
 import TabelAssignments from '../../components/Table/TabelAssignments'
+import ListCodes from '../coding/ListCodes'
+import { useState } from 'react'
 
 export default function Archive() {
+  const [selectedCodeId, setSelectedCodeId] = useState(null);
+
+  const onCodeSelect = (codeId) => {
+    setSelectedCodeId(codeId);
+    console.log('Selected code ID :', codeId);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <TopAppBar/>
@@ -25,24 +33,7 @@ export default function Archive() {
           </Typography>
         </Container>
         <Container component={"main"} maxWidth="md" sx={{margin: 2, marginBottom: 5}}>
-          <Grid container spacing={5} alignItems="flex-end" >
-            {Archivefilecard.map((item,index) => {
-              return (
-                <Grid item key={index} lg={4} md={4} sm={4} xs={12}>
-                  <Card sx={{fontFamily: "initial"}}>
-                    <CardHeader
-                      title={item.title}
-                    />
-                    <CardContent
-                      content={item.content}
-                    >
-                      {item.description}
-                    </CardContent>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
+            <ListCodes onCodeSelect={onCodeSelect} onDeleteCode={selectedCodeId}/>
         </Container>
         <Container component={"main"} maxWidth="md" sx={{margin: 2}}>
           <Typography align='center' variant='h4' sx={{color: "white", fontFamily: "serif"}} gutterBottom>

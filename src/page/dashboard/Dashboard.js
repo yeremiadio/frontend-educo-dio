@@ -5,7 +5,7 @@ import { WavingHand } from '@mui/icons-material';
 import TopAppBar from '../../components/Navbar/TopAppBar';
 import { dataDashboard } from '../../utils/DataDashboard';
 import BottomAppBar from '../../components/Navbar/BottomAppBar';
-import TabelAssignments from '../../components/Table/TabelAssignments';
+import DashboardAssignments from '../../components/Table/DashboardAssignments';
 
 export default function Dashboard() {
 
@@ -50,7 +50,7 @@ export default function Dashboard() {
         </Grid>
       </Container>
       <Container component={"main"} maxWidth="md" sx={{margin: 2,}}>
-          <TabelAssignments/>
+          <DashboardAssignments/>
       </Container>
       </div>
       <BottomAppBar/>

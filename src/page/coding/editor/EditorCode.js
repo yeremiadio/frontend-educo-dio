@@ -62,12 +62,14 @@ function EditorCode({ selectedCodeId, onClearCode }) {
       if (selectedCodeId) {
         // Update code yang dipilih
         await axios.put(`/api/codes/${selectedCodeId}`, { name, userCode, userInput });
+        alert("Code berhasil di edit.");
+        console.log('Successfully Edit Code.');
       } else {
         // Simpan code baru jika tidak ada id yang terpilih
         await axios.post('http://localhost:8080/save-compile', { name, userCode, userInput });
+        setShowPopup(true);
+        console.log('Successfully saved code.');
       } // Ganti userId dengan yang sesuai
-      console.log('Successfully saved code.');
-      setShowPopup(true);
     } catch (error) {
       console.error('Failed to save code:', error);
     }

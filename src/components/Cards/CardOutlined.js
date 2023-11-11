@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 
 export default function CardOutlined(props) {
   return (
-      <Card variant={props.variantcard}>
+      <Card variant={props.variantcard} sx={{backgroundColor: "GrayText"}}>
         <React.Fragment>
-          <CardContent sx={{backgroundColor: "GrayText"}}>
+          <CardContent>
               <Typography 
                   sx={{ fontSize: 14, fontFamily: "cursive" }} 
                   color={props.colorlabel} 

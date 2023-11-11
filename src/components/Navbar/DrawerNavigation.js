@@ -7,9 +7,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { AccountTree, Archive, Assignment, Book, Dashboard, Home, MenuOpen } from '@mui/icons-material';
+import { AccountTree, Archive, Assignment, Book, Dashboard, Home, MenuOpen, QuestionMark } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
@@ -18,6 +19,8 @@ export default function NavigationDrawer() {
   const [state, setState] = React.useState({
     left: false,
   });
+
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   const toggleDrawer =
     (anchor , open) =>
@@ -73,13 +76,22 @@ export default function NavigationDrawer() {
               <ListItemText primary="Coding Page" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding onClick={() => navigate("/archive")}>
-            <ListItemButton>
-              <ListItemIcon>
-                <Archive />
-              </ListItemIcon>
-              <ListItemText primary="Archive" />
-            </ListItemButton>
+          <ListItem disablePadding>
+            {currentUser && !currentUser.roles.includes("ROLE_SISWA") ? (
+              <ListItemButton onClick={() => navigate("/archive")}>
+                <ListItemIcon>
+                  <Archive />
+                </ListItemIcon>
+                <ListItemText primary="Archive" />
+              </ListItemButton>
+            ) : (
+              <ListItemButton disabled>
+                <ListItemIcon>
+                  <Archive />
+                </ListItemIcon>
+                <ListItemText primary="Archive" />
+              </ListItemButton>
+            )}
           </ListItem>
       </List>
       <Divider />
@@ -91,6 +103,14 @@ export default function NavigationDrawer() {
               </ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding onClick={() => navigate("/pedoman")}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <QuestionMark/>
+                </ListItemIcon>
+                <ListItemText primary="Guide" />
+              </ListItemButton>
           </ListItem>
       </List>
     </Box>

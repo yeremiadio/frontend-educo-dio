@@ -5,6 +5,7 @@ import LandingPage from "./page/landing";
 import NotFound from "./page/NotFound"; 
 import HalamanLogin from "./page/login";
 import Register from './page/register';
+import Guides from "./page/guides/guidesPage";
 import PrivateRoutes from "./utils/PrivateRoutes";
 
 import { ListRoutes } from "./utils/Routes"; 
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/" element={<LandingPage />} exact/>
               <Route path="/login" element={<HalamanLogin />}/>
               <Route path="/register" element={<Register />}/>
+              <Route path="/guides" element={<Guides />}/>
               <Route path="*" element={<NotFound />}/>
             </Routes>
           </Router>

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'; 
 import axios from 'axios';
 import { Button, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { Download } from '@mui/icons-material';
+import { Delete, Download } from '@mui/icons-material';
 
 
 const TabelAssignments = () => {
     const [data, setData] = useState([]); 
+    const [selectedRows, setSelectedRows] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/getassignments')
@@ -33,10 +34,42 @@ const TabelAssignments = () => {
         });
     };
 
+    const handleCheckboxChange = (rowIndex) => {
+        if (selectedRows.includes(rowIndex)) {
+            setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
+        } else {
+            setSelectedRows([...selectedRows, rowIndex]);
+        }
+    };
+
+    const handleDelete = () => {
+        if (selectedRows.length === 0) {
+            alert('Pilih data yang akan dihapus.');
+            return;
+        }
+    
+        // Kirim permintaan penghapusan data yang dipilih
+        selectedRows.forEach((rowIndex) => {
+            const rowData = data[rowIndex]; // Data yang akan dihapus
+            // Kirim permintaan penghapusan data dengan rowData ke server
+            axios
+            .delete(`http://localhost:8080/api/delete-assignments/${rowData}`, { data: rowData })
+            .then(() => {
+                alert(`Data berhasil dihapus: ${JSON.stringify(rowData)}`);
+                // Hapus data dari state lokal
+                setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
+            })
+            .catch((error) => {
+                alert(`Gagal menghapus data: ${JSON.stringify(rowData)}`);
+            });
+        });
+    }
+
     return (
         <div>
             <TableContainer component={Paper} style={{ backgroundColor: 'darkgrey', borderBlockWidth: 10 }}>
-                <Button variant='text' onClick={handleDownload} sx={{ color: 'white', align: 'right' }}><Download/></Button>
+                <Button variant='text'style={{ alignItems: 'end' }} onClick={handleDownload} sx={{ color: 'white'}}><Download/></Button>
+                <Button variant='text' onClick={handleDelete} sx={{ color: 'white'}}><Delete/>Delete Data</Button>
                 <Typography align='center' variant='h3' fontFamily={'fantasy'} gutterBottom>
                     <strong>Assignment's C++</strong> 
                 </Typography>
@@ -45,6 +78,7 @@ const TabelAssignments = () => {
                     <Table stickyHeader aria-label='sticky table' >
                         <TableHead>
                             <TableRow>
+                                <TableCell align='center'></TableCell>
                                 <TableCell align='center'><strong>Score</strong></TableCell>
                                 <TableCell align='center'><strong>Name</strong></TableCell>
                                 <TableCell align='center'><strong>Class</strong></TableCell>
@@ -55,6 +89,13 @@ const TabelAssignments = () => {
                         <TableBody>
                             {data.map((row, rowIndex) => (
                                 <TableRow key={rowIndex}>
+                                    <TableCell align='center'>
+                                        <input
+                                            type='checkbox'
+                                            checked={selectedRows.includes(rowIndex)}
+                                            onChange={() => handleCheckboxChange(rowIndex)}
+                                        />
+                                    </TableCell>
                                     {Object.values(row).map((cell, cellIndex) => (
                                         <TableCell key={cellIndex} align='center'>
                                             {cell}

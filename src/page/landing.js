@@ -1,13 +1,14 @@
-import { Box, Button, Container, ThemeProvider } from "@mui/material";
+import { Box, Button, Container, ThemeProvider, Typography } from "@mui/material";
 import React from "react";
 import CardOutlined from "../components/Cards/CardOutlined"; 
 import { useNavigate } from "react-router-dom";
 import { theme } from "../utils/ThemeProvider"
 import CardImage from "../components/Cards/CardImage";
 import Content from "../components/Images/Hero2.jpg"
+import BottomAppBar from "../components/Navbar/BottomAppBar";
 
 
-export default function LandingPage(params) {
+export default function LandingPage() {
     const navigate = useNavigate()
 
     return (
@@ -16,8 +17,14 @@ export default function LandingPage(params) {
                 <ThemeProvider theme={theme}>
                     <Container maxWidth="lg" >
                         <Box display="flex" flexDirection="column" >
-                            <h1>Welcome Codingers,</h1>
-                            <h3>to Our Web Education Code.</h3>
+                            <Typography variant="h3" fontFamily={'fantasy'} textAlign={'center'}>Welcome Codingers,</Typography>
+                            <Typography variant="h5" fontFamily={'fantasy'} textAlign={'center'}>to Our web Education Coding.</Typography>
+                            <Button 
+                                variant="text" 
+                                onClick={() => navigate("/guides")} 
+                                sx={{ color: 'white', fontFamily: 'fantasy', fontSize: 20 }}>
+                                    Guide's
+                            </Button>
                         </Box>
                         <Box sx={{
                             display: 'flex',
@@ -89,6 +96,7 @@ export default function LandingPage(params) {
                     </Container>
                 </ThemeProvider>
             </div>
+            <BottomAppBar/>
         </div>
     )
 }

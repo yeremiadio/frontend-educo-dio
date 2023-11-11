@@ -33,7 +33,7 @@ function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
                 // Penanganan Berhasil
                 await axios.delete(`api/codes/${onDeleteCode}`);
                 console.log('Delete Code success.');
-                codeId();
+                alert("Berhasil menghapus data Code.");
             }
         } catch (error) {
             console.error('Failed to delete Code : ', error);
@@ -44,11 +44,11 @@ function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
         <div>
             <Grid container spacing={3}>
             {codes.map((Code) => (
-            <Grid item key={Code.id} lg={4} md={4} sm={4} xs={12} auto >
+            <Grid item key={Code.id} lg={4} md={4} sm={4} xs={12} >
                 <Card 
                     variant='outlined' 
                     onClick={() => onCodeSelect(Code.id)} 
-                    style={{ cursor: 'pointer', }} 
+                    style={{ cursor: 'pointer', colorScheme: ['normal' | 'dark'] }} 
                     sx={{ height: '150px' }}
                 >
                     <CardContent>

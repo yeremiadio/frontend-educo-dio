@@ -4,6 +4,7 @@ import Archive from "../page/archive/Archive";
 import Materi from "../page/materi/Materi";
 import Assignment from "../page/assignment/Assignment";
 import Profile from "../page/profile";
+import Pedoman from "../page/guides/Pedoman";
 
 export const ListRoutes = [
     
@@ -30,5 +31,9 @@ export const ListRoutes = [
     {
         path: "/profile",
         element: <Profile />
+    },
+    {
+        path: "/pedoman",
+        element: <Pedoman />
     },
 ]

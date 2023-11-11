@@ -6,7 +6,7 @@ import Array from "../components/Images/ContentImages/5.jpg"
 
 export const dataDashboard = [
     {
-        title: "Tipe Data",
+        title: "Variabel & Tipe Data",
         description: "Tipe Data adalah sebuah pengklasifikasian data berdasarkan jenis data tersebut...",
         image: TipeData
     },
