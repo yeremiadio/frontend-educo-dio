@@ -17,10 +17,10 @@ export default function Pedoman() {
                     <Typography variant="h2" textAlign={'center'} sx={{ fontFamily: 'fantasy' }} gutterBottom>Guide for User's</Typography>
                     {currentUser && !currentUser.roles.includes("ROLE_SISWA") ? (
                         <>
-                        <Typography>Guide of Guru</Typography>
+                        <Typography variant="h4" textAlign={'center'} sx={{ fontFamily: 'fantasy' }} gutterBottom>Guide of Guru</Typography>
                         <iframe 
                             title='Guide of Guru'
-                            src="https://scribehow.com/embed/Step-by-step_guide_of_a_EDUCO_users__UwN5IhoRQ8a64RxQfdcL4A" 
+                            src="https://scribehow.com/embed/Step-by-step_guide_Navigating_and_Using_a_Coding_Education_Platform_for_Guru__1f_vMTOGTea7ehr7mVOblw"
                             width="100%" 
                             height="500" 
                             allowfullscreen 
@@ -28,10 +28,10 @@ export default function Pedoman() {
                         </>
                     ):(
                         <>
-                        <Typography>Guide of Siswa</Typography>
+                        <Typography variant="h4" textAlign={'center'} sx={{ fontFamily: 'fantasy' }} gutterBottom>Guide of Siswa</Typography>
                         <iframe 
                             title='Guide of Siswa'
-                            src="https://scribehow.com/embed/Step-by-step_guide_of_a_EDUCO_users__UwN5IhoRQ8a64RxQfdcL4A" 
+                            src="https://scribehow.com/embed/A_Step-by-Step_Guide_to_Navigating_and_Using_EDUCO_for_Siswa__4RKkih7XTMGl-B6bBuASFQ" 
                             width="100%" 
                             height="500" 
                             allowfullscreen 
