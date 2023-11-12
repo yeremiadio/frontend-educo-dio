@@ -1,9 +1,8 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export default function Copyright(props) {
     return <Typography variant={props.variant} color={props.color} align={props.align} {...props}>
-        Copyright &copy; <Link color="primary" href="/">Diwarta</Link> 
+        Copyright &copy; <a color="primary" href="https://instagram.com/diwa.rta?utm_source=qr&igshid=aHBIbXMwamgzOWtr">Diwarta</a> 
     </Typography>
 }
