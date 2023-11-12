@@ -1,117 +1,160 @@
-import React, {useEffect, useState} from 'react'; 
-import axios from 'axios';
-import { Button, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { Delete, Download } from '@mui/icons-material';
-
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Divider,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { Delete, Download } from "@mui/icons-material";
+import axiosInstance from "../../config/axiosInstance";
 
 const TabelAssignments = () => {
-    const [data, setData] = useState([]); 
-    const [selectedRows, setSelectedRows] = useState([]);
+  const [data, setData] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/getassignments')
-        .then((response) => {
-            setData(response.data);
-        })
-        .catch((error) => {
-            console.error('Error fetching data :', error);
-        });
-    }, []);
+  useEffect(() => {
+    axiosInstance
+      .get("/api/getassignments")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data :", error);
+      });
+  }, []);
 
-    const handleDownload = () => {
-        axios.get('http://localhost:8080/download', { responseType: 'blob' })
-        .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'data_assignments.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
+  const handleDownload = () => {
+    axiosInstance
+      .get("/download", { responseType: "blob" })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "data_assignments.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
 
-            console.log('Download Data success:', response);
-        });
-    };
+        console.log("Download Data success:", response);
+      });
+  };
 
-    const handleCheckboxChange = (rowIndex) => {
-        if (selectedRows.includes(rowIndex)) {
-            setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
-        } else {
-            setSelectedRows([...selectedRows, rowIndex]);
-        }
-    };
+  const handleCheckboxChange = (rowIndex) => {
+    if (selectedRows.includes(rowIndex)) {
+      setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
+    } else {
+      setSelectedRows([...selectedRows, rowIndex]);
+    }
+  };
 
-    const handleDelete = () => {
-        if (selectedRows.length === 0) {
-            alert('Pilih data yang akan dihapus.');
-            return;
-        }
-    
-        // Kirim permintaan penghapusan data yang dipilih
-        selectedRows.forEach((rowIndex) => {
-            const rowData = data[rowIndex]; // Data yang akan dihapus
-            // Kirim permintaan penghapusan data dengan rowData ke server
-            axios
-            .delete(`http://localhost:8080/api/delete-assignments/${rowData}`, { data: rowData })
-            .then(() => {
-                alert(`Data berhasil dihapus: ${JSON.stringify(rowData)}`);
-                // Hapus data dari state lokal
-                setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
-            })
-            .catch((error) => {
-                alert(`Gagal menghapus data: ${JSON.stringify(rowData)}`);
-            });
-        });
+  const handleDelete = () => {
+    if (selectedRows.length === 0) {
+      alert("Pilih data yang akan dihapus.");
+      return;
     }
 
-    return (
-        <div>
-            <TableContainer component={Paper} style={{ backgroundColor: 'darkgrey', borderBlockWidth: 10 }}>
-                <Button variant='text'style={{ alignItems: 'end' }} onClick={handleDownload} sx={{ color: 'white'}}><Download/></Button>
-                <Button variant='text' onClick={handleDelete} sx={{ color: 'white'}}><Delete/>Delete Data</Button>
-                <Typography align='center' variant='h3' fontFamily={'fantasy'} gutterBottom>
-                    <strong>Assignment's C++</strong> 
-                </Typography>
-                <Divider/>
-                {data && data.length > 0 ? (
-                    <Table stickyHeader aria-label='sticky table' >
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align='center'></TableCell>
-                                <TableCell align='center'><strong>Score</strong></TableCell>
-                                <TableCell align='center'><strong>Name</strong></TableCell>
-                                <TableCell align='center'><strong>Class</strong></TableCell>
-                                <TableCell align='center'><strong>Atd. Number</strong></TableCell>
-                                <TableCell align='center'><strong>Assignment's</strong></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {data.map((row, rowIndex) => (
-                                <TableRow key={rowIndex}>
-                                    <TableCell align='center'>
-                                        <input
-                                            type='checkbox'
-                                            checked={selectedRows.includes(rowIndex)}
-                                            onChange={() => handleCheckboxChange(rowIndex)}
-                                        />
-                                    </TableCell>
-                                    {Object.values(row).map((cell, cellIndex) => (
-                                        <TableCell key={cellIndex} align='center'>
-                                            {cell}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                ):(
-                    <Typography align='center' variant='h4'>404 Not Found.</Typography>
-                )}
-            </TableContainer>
-            
-        </div>
-    );
+    // Kirim permintaan penghapusan data yang dipilih
+    selectedRows.forEach((rowIndex) => {
+      const rowData = data[rowIndex]; // Data yang akan dihapus
+      // Kirim permintaan penghapusan data dengan rowData ke server
+      axiosInstance
+        .delete(`/api/delete-assignments/${rowData}`, {
+          data: rowData,
+        })
+        .then(() => {
+          alert(`Data berhasil dihapus: ${JSON.stringify(rowData)}`);
+          // Hapus data dari state lokal
+          setSelectedRows(selectedRows.filter((index) => index !== rowIndex));
+        })
+        .catch((error) => {
+          alert(`Gagal menghapus data: ${JSON.stringify(rowData)}`);
+        });
+    });
+  };
+
+  return (
+    <div>
+      <TableContainer
+        component={Paper}
+        style={{ backgroundColor: "darkgrey", borderBlockWidth: 10 }}
+      >
+        <Button
+          variant="text"
+          style={{ alignItems: "end" }}
+          onClick={handleDownload}
+          sx={{ color: "white" }}
+        >
+          <Download />
+        </Button>
+        <Button variant="text" onClick={handleDelete} sx={{ color: "white" }}>
+          <Delete />
+          Delete Data
+        </Button>
+        <Typography
+          align="center"
+          variant="h3"
+          fontFamily={"fantasy"}
+          gutterBottom
+        >
+          <strong>Assignment's C++</strong>
+        </Typography>
+        <Divider />
+        {data && data.length > 0 ? (
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center"></TableCell>
+                <TableCell align="center">
+                  <strong>Score</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>Name</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>Class</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>Atd. Number</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>Assignment's</strong>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  <TableCell align="center">
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(rowIndex)}
+                      onChange={() => handleCheckboxChange(rowIndex)}
+                    />
+                  </TableCell>
+                  {Object.values(row).map((cell, cellIndex) => (
+                    <TableCell key={cellIndex} align="center">
+                      {cell}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <Typography align="center" variant="h4">
+            404 Not Found.
+          </Typography>
+        )}
+      </TableContainer>
+    </div>
+  );
 };
 
-export default TabelAssignments
+export default TabelAssignments;

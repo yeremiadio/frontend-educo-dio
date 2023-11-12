@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import axiosInstance from '../config/axiosInstance';
 
 const UserContext = createContext(); //Context baru untuk pengelolaan data pengguna
 
@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
         
         setTimeout(() => {
             const Data = () => {
-                return axios.get('api/test/all')
+                return axiosInstance.get('/api/test/all')
             };
             setUserData(Data);
         }, 1000);

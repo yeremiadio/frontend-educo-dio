@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'; 
-import axios from 'axios';
+// import axios from 'axios';
 import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
+import axiosInstance from '../../config/axiosInstance';
 
 const DashboardAssignments = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/getassignments')
+        axiosInstance.get('/api/getassignments')
         .then((response) => {
             setData(response.data);
         })

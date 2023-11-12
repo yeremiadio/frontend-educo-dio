@@ -1,28 +1,28 @@
-import axios from "axios";
+import axiosInstance from "../../config/axiosInstance";
 
-const API_URL = "http://localhost:3000/api/test/";
+const API_URL = `/api/test/`;
 
 const getPublicContent = () => {
-    return axios.get(API_URL + "all");
+  return axiosInstance.get(API_URL + "all");
 };
 
 const getSiswaBoard = () => {
-    return axios.get(API_URL + "siswa");
+  return axiosInstance.get(API_URL + "siswa");
 };
 
 const getGuruBoard = () => {
-    return axios.get(API_URL + "guru");
+  return axiosInstance.get(API_URL + "guru");
 };
 
 const getAdminBoard = () => {
-    return axios.get(API_URL + "admin");
+  return axiosInstance.get(API_URL + "admin");
 };
 
 const UserService = {
-    getPublicContent,
-    getSiswaBoard,
-    getGuruBoard,
-    getAdminBoard,
-}
+  getPublicContent,
+  getSiswaBoard,
+  getGuruBoard,
+  getAdminBoard,
+};
 
 export default UserService;

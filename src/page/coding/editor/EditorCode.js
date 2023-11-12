@@ -1,4 +1,3 @@
-import axios from "axios";
 import "./EditorCode.css";
 import React, { useEffect, useState } from "react";
 import { Editor } from "@monaco-editor/react";
@@ -8,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { clearMessage } from "../../../utils/slices/message";
 import Popup from "../../../components/PopUp/PopUp";
 import { Button } from "@mui/material";
+import axiosInstance from "../../../config/axiosInstance";
 
 function EditorCode({ selectedCodeId, onClearCode }) {
   const [userCode, setUserCode] = useState("");
@@ -32,7 +32,7 @@ function EditorCode({ selectedCodeId, onClearCode }) {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`http://localhost:8080/compile`, {
+      const { data } = await axiosInstance.post(`/compile`, {
         code: userCode,
         userInput: userInput,
       });
@@ -61,17 +61,25 @@ function EditorCode({ selectedCodeId, onClearCode }) {
     try {
       if (selectedCodeId) {
         // Update code yang dipilih
-        await axios.put(`/api/codes/${selectedCodeId}`, { name, userCode, userInput });
+        await axiosInstance.put(`/api/codes/${selectedCodeId}`, {
+          name,
+          userCode,
+          userInput,
+        });
         alert("Code berhasil di edit.");
-        console.log('Successfully Edit Code.');
+        console.log("Successfully Edit Code.");
       } else {
         // Simpan code baru jika tidak ada id yang terpilih
-        await axios.post('http://localhost:8080/save-compile', { name, userCode, userInput });
+        await axiosInstance.post("/save-compile", {
+          name,
+          userCode,
+          userInput,
+        });
         setShowPopup(true);
-        console.log('Successfully saved code.');
+        console.log("Successfully saved code.");
       } // Ganti userId dengan yang sesuai
     } catch (error) {
-      console.error('Failed to save code:', error);
+      console.error("Failed to save code:", error);
     }
   };
   const closePopup = () => {
@@ -83,13 +91,13 @@ function EditorCode({ selectedCodeId, onClearCode }) {
       //Mengambil Code yang telah tersimpan
       async function fetchCode() {
         try {
-          const response = await axios.get(`api/codes/${selectedCodeId}`);
+          const response = await axiosInstance.get(`/api/codes/${selectedCodeId}`);
           const { name, userCode, userInput } = response.data;
           setName(name);
           setUserCode(userCode);
           setUserInput(userInput);
         } catch (error) {
-          console.error('Failed to fetch code :', error);
+          console.error("Failed to fetch code :", error);
         }
       }
       fetchCode();
@@ -119,12 +127,18 @@ function EditorCode({ selectedCodeId, onClearCode }) {
         setFontSize={setFontSize}
       />
       <input
-          type="text"
-          placeholder="File Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+        type="text"
+        placeholder="File Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
-      <Button variant="text" onClick={handleClearEditor} sx={{ marginLeft: 2, fontFamily: 'cursive'}}>Clear Editor</Button>
+      <Button
+        variant="text"
+        onClick={handleClearEditor}
+        sx={{ marginLeft: 2, fontFamily: "cursive" }}
+      >
+        Clear Editor
+      </Button>
       <div className="main-code">
         <div className="left-container">
           <Editor
@@ -139,20 +153,31 @@ function EditorCode({ selectedCodeId, onClearCode }) {
               setUserCode(value);
             }}
           />
-          <button className="run-btn" type="button" disabled={!userLang} onClick={compile}>
+          <button
+            className="run-btn"
+            type="button"
+            disabled={!userLang}
+            onClick={compile}
+          >
             Run
           </button>
-          <button className="save-btn" type="submit" disabled={!userLang} onClick={handleSaveCode}>
+          <button
+            className="save-btn"
+            type="submit"
+            disabled={!userLang}
+            onClick={handleSaveCode}
+          >
             Save
           </button>
         </div>
         <div className="right-container">
           <h4>Input : </h4>
           <div className="input-box">
-            <textarea 
+            <textarea
               id="code-inp"
-              value={userInput} 
-              onChange={(e) => setUserInput(e.target.value)}></textarea>
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+            ></textarea>
           </div>
           <h4>Output</h4>
           {loading ? (
