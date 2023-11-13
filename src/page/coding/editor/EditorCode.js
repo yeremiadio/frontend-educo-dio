@@ -70,7 +70,7 @@ function EditorCode({ selectedCodeId, onClearCode }) {
         console.log("Successfully Edit Code.");
       } else {
         // Simpan code baru jika tidak ada id yang terpilih
-        await axiosInstance.post("/save-compile", {
+        await axiosInstance.post("/api/save-compile", {
           name,
           userCode,
           userInput,
