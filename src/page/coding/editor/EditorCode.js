@@ -32,7 +32,7 @@ function EditorCode({ selectedCodeId, onClearCode }) {
     setLoading(true);
 
     try {
-      const { data } = await axiosInstance.post(`/compile`, {
+      const { data } = await axiosInstance.post(`/api/compile`, {
         code: userCode,
         userInput: userInput,
       });
