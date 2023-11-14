@@ -9,7 +9,6 @@ import Guides from "./page/guides/guidesPage";
 import PrivateRoutes from "./utils/PrivateRoutes";
 
 import { ListRoutes } from "./utils/Routes"; 
-import { UserProvider } from "./utils/UserContext";
 
 function ScrollToTop() {
   useEffect(() => {
@@ -24,8 +23,7 @@ const App = () => {
        
           <Router>
             <ScrollToTop/>
-            <Routes> 
-              <UserProvider>
+            <Routes>
               <Route element={<PrivateRoutes/>}>
                   {ListRoutes.map((item,index) => {
                     return (
@@ -34,7 +32,6 @@ const App = () => {
                   })
                 }
                 </Route>
-              </UserProvider>
               <Route path="/" element={<LandingPage />} exact/>
               <Route path="/login" element={<HalamanLogin />}/>
               <Route path="/register" element={<Register />}/>
