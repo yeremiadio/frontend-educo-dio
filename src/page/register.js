@@ -148,9 +148,9 @@ const Register = () => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.roleId && Boolean(formik.errors.roleId)}
                         >
-                        <MenuItem value="" label="Select a role" />
-                        <MenuItem value={1} label="Siswa" />
-                        <MenuItem value={2} label="Guru" />
+                        <MenuItem value="" label="Select a role" disabled>Select a Role</MenuItem>
+                        <MenuItem value={1} label="Siswa">Siswa</MenuItem>
+                        <MenuItem value={2} label="Guru">Guru</MenuItem>
                         </Select>
                     </FormControl>
                     {formik.touched.roleId && formik.errors.roleId && (
