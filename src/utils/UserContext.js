@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
         
         setTimeout(() => {
             const Data = () => {
-                return axiosInstance.get('/api/test/all')
+                return axiosInstance.get('/api/users/:id')
             };
             setUserData(Data);
         }, 1000);
