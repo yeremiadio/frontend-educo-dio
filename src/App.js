@@ -21,10 +21,11 @@ function ScrollToTop() {
 const App = () => {
   return (
       <div className="App">
-        <UserProvider>
+       
           <Router>
             <ScrollToTop/>
-            <Routes>
+            <Routes> 
+              <UserProvider>
               <Route element={<PrivateRoutes/>}>
                   {ListRoutes.map((item,index) => {
                     return (
@@ -33,7 +34,7 @@ const App = () => {
                   })
                 }
                 </Route>
-              
+              </UserProvider>
               <Route path="/" element={<LandingPage />} exact/>
               <Route path="/login" element={<HalamanLogin />}/>
               <Route path="/register" element={<Register />}/>
@@ -41,7 +42,7 @@ const App = () => {
               <Route path="*" element={<NotFound />}/>
             </Routes>
           </Router>
-        </UserProvider>
+        
       </div>
   );
 }
