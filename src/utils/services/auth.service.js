@@ -2,23 +2,24 @@ import axiosInstance from "../../config/axiosInstance";
 
 const API_URL = `/api/auth/`;
 
-const register = (username, email, password) => {
+const register = (username, email, password, roleId) => {
   return axiosInstance.post(API_URL + "signup", {
     username,
     email,
     password,
+    roleId,
   });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   return axiosInstance
     .post(API_URL + "signin", {
-      username,
+      email,
       password,
     })
     .then((response) => {
-      if (response.data.username) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+      if (!!response?.data) {
+        localStorage.setItem("token", response.data.token);
       }
 
       return response.data;
@@ -26,14 +27,14 @@ const login = (username, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("token");
   return axiosInstance.post(API_URL + "signout").then((response) => {
     return response.data;
   });
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(localStorage.getItem("token"));
 };
 
 const AuthService = {

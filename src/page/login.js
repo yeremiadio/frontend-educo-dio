@@ -26,18 +26,18 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues : {
-            username: "",
+            email: "",
             password: "",
         },
         validationSchema : loginSchema,
         onSubmit : (values) => {
-            const { username, password } = values;
+            
             setLoading(true);
     
-            dispatch(login({ username, password }))
+            dispatch(login(values))
             .unwrap()
             .then(() => {
-                navigate("/dashboard");
+                
                 window.location.reload();
             })
             .catch(() => {
@@ -64,14 +64,14 @@ const Login = () => {
                         <form onSubmit={formik.handleSubmit} style={{alignItems: "center", margin: 2 }}>
                             <TextField 
                                 fullWidth
-                                id="username"
-                                name="username"
-                                label="Username"
-                                value={formik.values.username}
+                                id="email"
+                                name="email"
+                                label="Email"
+                                value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                error={formik.touched.username && Boolean(formik.errors.username)}
-                                helperText={formik.touched.username && formik.errors.username}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
                                 sx={{margin: 2}}
                             />
                             <div style={{ display: "flex", width: "100%", position: "relative" }}>

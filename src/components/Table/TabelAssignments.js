@@ -31,7 +31,7 @@ const TabelAssignments = () => {
 
   const handleDownload = () => {
     axiosInstance
-      .get("/download", { responseType: "blob" })
+      .get("/api/download", { responseType: "blob" })
       .then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const a = document.createElement("a");

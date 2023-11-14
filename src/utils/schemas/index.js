@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const loginSchema = Yup.object().shape({
-    username: Yup
+    email: Yup
     .string("Enter your Username!")
     .required("This field is required!"),
     password: Yup
@@ -33,5 +33,9 @@ export const registerSchema = Yup.object().shape({
     confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Password must match.")
     .required("This field is required!"),
+    roleId: Yup.number()
+    .integer('Role must be an integer')
+    .required('Role is required')
+    .positive('Role must be a positive integer'),
 });
 

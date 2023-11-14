@@ -8,16 +8,22 @@ import { useNavigate } from "react-router-dom";
 import {
     Button,
     Container,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField,
     ThemeProvider,
     Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerSchema } from "../utils/schemas";
+import axiosInstance from "../config/axiosInstance";
 
 const ErrorMessage = ({ message, successful }) => (
     <div className="form-group">
-        <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert">
+        <div className={successful ? "alert alert-success" : "alert alert-danger"} role="alert" color="dark">
         {message}
         </div>
     </div>
@@ -27,11 +33,24 @@ const Register = () => {
     let navigate = useNavigate();
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [selectedRole, setSelectedRole] = useState([]);
 
     const { message } = useSelector((state) => state.message);
     const dispatch = useDispatch();
 
     useEffect(() => {
+
+        // Simulasi fetch daftar role dari API (ganti dengan implementasi sesungguhnya)
+        const fetchRoles = async () => {
+            // Kirim permintaan ke API untuk mendapatkan daftar role
+            // Setelah mendapatkan respons, perbarui state roles
+            const response = await axiosInstance.fetch('api/roles');
+            const data = await response.json();
+            setSelectedRole(data);
+        };
+    
+        fetchRoles();
+
         dispatch(clearMessage());
     }, [dispatch]);
 
@@ -42,6 +61,7 @@ const Register = () => {
         kelas: "",
         password: "",
         confirmPassword: "",
+        roleId: "",
         },
         validationSchema: registerSchema,
         onSubmit: (values) => {
@@ -124,12 +144,36 @@ const Register = () => {
                     style={{ position: "absolute", right: 10, top: 33, cursor: "pointer" }}
                     onClick={handlePasswordVisibility}
                     >
-                    {isShowPassword ? (
-                        <VisibilityOff fontSize="medium" color="action" />
-                    ) : (
-                        <Visibility fontSize="medium" color="action" />
-                    )}
+                        {isShowPassword ? (
+                            <VisibilityOff fontSize="medium" color="action" />
+                        ) : (
+                            <Visibility fontSize="medium" color="action" />
+                        )}
                     </div>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl fullWidth>
+                            <InputLabel id="roleId-label">Role</InputLabel>
+                            <Select
+                            labelId="roleId-label"
+                            id="roleId"
+                            name="roleId"
+                            value={formik.values.roleId}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.roleId && Boolean(formik.errors.roleId)}
+                            >
+                            <MenuItem value="" label="Select a role" />
+                            {selectedRole.map((role) => (
+                                <MenuItem key={role.id} value={String(role.id)}>
+                                {role.name}
+                                </MenuItem>
+                            ))}
+                            </Select>
+                        </FormControl>
+                        {formik.touched.roleId && formik.errors.roleId && (
+                            <div>{formik.errors.roleId}</div>
+                        )}
+                    </Grid>
                 </div>
                 <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{ margin: 2 }}>
                     Sign Up
