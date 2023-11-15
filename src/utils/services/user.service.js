@@ -1,17 +1,18 @@
-import { useSelector } from "react-redux";
 import axiosInstance from "../../config/axiosInstance";
 
 const API_URL = `/api/users/`;
 
-const { user: currentUser } = useSelector((state) => state.auth);
-
-const getPublicContent = () => {
-  return axiosInstance.get(API_URL + currentUser.id);
+const getUserById = ({ id }) => {
+  const token = localStorage.getItem("token");
+  return axiosInstance.get(API_URL + id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
-
 const UserService = {
-  getPublicContent,
+  getUserById,
 };
 
 export default UserService;

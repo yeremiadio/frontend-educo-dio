@@ -10,40 +10,42 @@ import {
   Typography,
 } from "@mui/material";
 import axiosInstance from "../../config/axiosInstance";
+import { useSearchParams } from "react-router-dom";
 
-function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
+function ListCodes() {
   const [codes, setCodes] = useState([]);
-
+  const token = localStorage.getItem("token");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const codeIdParam = searchParams?.get("id");
   useEffect(() => {
-    async function fetchCodes() {
-      try {
-        const response = await axiosInstance.get(
-          "/api/codes"
-        );
-        setCodes(response.data);
-      } catch (error) {
-        console.error("Failed to fetch codes:", error);
+    if (!!token) {
+      async function fetchCodes() {
+        try {
+          const response = await axiosInstance.get("/api/codes", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setCodes(response.data);
+        } catch (error) {
+          console.error("Failed to fetch codes:", error);
+        }
       }
+
+      fetchCodes();
     }
-
-    fetchCodes();
-
-    // lakukan polling untuk refresh data
-    // const pollingInterval = setInterval(fetchCodes, 5000);
-
-    // return () => {
-    //     clearInterval(pollingInterval);
-    // };
-  }, []);
+  }, [token]);
 
   const handleCodeDelete = async () => {
     try {
-      if (onDeleteCode) {
-        // Penanganan Berhasil
-        await axiosInstance.delete(`/api/codes/${onDeleteCode}`);
-        console.log("Delete Code success.");
-        alert("Berhasil menghapus data Code.");
-      }
+      // Penanganan Berhasil
+      await axiosInstance.delete(`/api/codes/${codeIdParam}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Delete Code success.");
+      alert("Berhasil menghapus data Code.");
     } catch (error) {
       console.error("Failed to delete Code : ", error);
     }
@@ -56,7 +58,10 @@ function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
           <Grid item key={Code.id} lg={4} md={4} sm={4} xs={12}>
             <Card
               variant="outlined"
-              onClick={() => onCodeSelect(Code.id)}
+              onClick={() => {
+                searchParams.set("id", Code.id);
+                setSearchParams(searchParams);
+              }}
               style={{ cursor: "pointer", colorScheme: ["normal" | "dark"] }}
               sx={{ height: "150px" }}
             >

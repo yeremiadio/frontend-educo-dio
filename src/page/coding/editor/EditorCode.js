@@ -8,10 +8,13 @@ import { clearMessage } from "../../../utils/slices/message";
 import Popup from "../../../components/PopUp/PopUp";
 import { Button } from "@mui/material";
 import axiosInstance from "../../../config/axiosInstance";
+import { useSearchParams } from "react-router-dom";
 
-function EditorCode({ selectedCodeId, onClearCode }) {
+function EditorCode({ onClearCode }) {
+  const [searchParams] = useSearchParams();
+  const selectedCodeId = searchParams.get("id");
   const [userCode, setUserCode] = useState("");
-  const [userLang, setUserLang] = useState("");
+  const [userLang, setUserLang] = useState("cpp");
   const [userTheme, setUserTheme] = useState("vs-dark");
   const [fontSize, setFontSize] = useState(20);
   const [userInput, setUserInput] = useState("");
@@ -20,6 +23,7 @@ function EditorCode({ selectedCodeId, onClearCode }) {
   const [showPopup, setShowPopup] = useState(false);
   const [name, setName] = useState("");
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   // Define Monaco Editor options
   const options = {
@@ -32,10 +36,18 @@ function EditorCode({ selectedCodeId, onClearCode }) {
     setLoading(true);
 
     try {
-      const { data } = await axiosInstance.post(`/api/compile`, {
-        code: userCode,
-        userInput: userInput,
-      });
+      const { data } = await axiosInstance.post(
+        `/api/compile`,
+        {
+          code: userCode,
+          userInput: userInput,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const { stdout, stderr, error } = data.data;
 
@@ -61,20 +73,36 @@ function EditorCode({ selectedCodeId, onClearCode }) {
     try {
       if (selectedCodeId) {
         // Update code yang dipilih
-        await axiosInstance.put(`/api/codes/${selectedCodeId}`, {
-          name,
-          userCode,
-          userInput,
-        });
+        await axiosInstance.put(
+          `/api/codes/${selectedCodeId}`,
+          {
+            name,
+            userCode,
+            userInput,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         alert("Code berhasil di edit.");
         console.log("Successfully Edit Code.");
       } else {
         // Simpan code baru jika tidak ada id yang terpilih
-        await axiosInstance.post("/api/save-compile", {
-          name,
-          userCode,
-          userInput,
-        });
+        await axiosInstance.post(
+          "/api/save-compile",
+          {
+            name,
+            userCode,
+            userInput,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setShowPopup(true);
         console.log("Successfully saved code.");
       } // Ganti userId dengan yang sesuai
@@ -87,11 +115,18 @@ function EditorCode({ selectedCodeId, onClearCode }) {
   };
 
   useEffect(() => {
-    if (selectedCodeId) {
+    if (selectedCodeId && !!token) {
       //Mengambil Code yang telah tersimpan
       async function fetchCode() {
         try {
-          const response = await axiosInstance.get(`/api/codes/${selectedCodeId}`);
+          const response = await axiosInstance.get(
+            `/api/codes/${selectedCodeId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           const { name, userCode, userInput } = response.data;
           setName(name);
           setUserCode(userCode);
@@ -102,7 +137,7 @@ function EditorCode({ selectedCodeId, onClearCode }) {
       }
       fetchCode();
     }
-  }, [selectedCodeId]);
+  }, [selectedCodeId, token]);
 
   const handleClearEditor = () => {
     setName("");
