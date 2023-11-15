@@ -108,15 +108,15 @@ if (!accessToken) {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            {userInfo.roleId && !userInfo.roleId === ('1') ? (
-              <ListItemButton onClick={() => navigate("/archive")}>
+            {userInfo.roleId && userInfo.roleId === ('1') ? (
+              <ListItemButton disabled>
                 <ListItemIcon>
                   <Archive />
                 </ListItemIcon>
                 <ListItemText primary="Archive" />
               </ListItemButton>
             ) : (
-              <ListItemButton disabled>
+              <ListItemButton onClick={() => navigate("/archive")}>
                 <ListItemIcon>
                   <Archive />
                 </ListItemIcon>
