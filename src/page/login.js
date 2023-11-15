@@ -20,7 +20,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
@@ -33,11 +33,13 @@ const Login = () => {
         localStorage.setItem('accessToken', response.data.accessToken);
 
         // Lakukan sesuatu setelah login berhasil, misalnya navigasi ke halaman lain
-        console.log(response.data);
         navigate("/dashboard");
+        console.log(response.data);
+        return response.data;
         } catch (error) {
         console.error(error);
         // Handle kesalahan, misalnya menampilkan pesan kesalahan kepada pengguna
+        return null;
         }
     }
 

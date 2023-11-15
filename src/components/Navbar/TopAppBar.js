@@ -13,7 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../../config/axiosInstance';
 
 export default function TopAppBar() {
-  const [userInfo, setUserInfo] = useState('');
+  const [userInfo, setUserInfo] = useState(null);
 
   // Menggunakan localStorage untuk mendapatkan informasi pengguna
   const accessToken = localStorage.getItem('accessToken');
@@ -31,6 +31,7 @@ export default function TopAppBar() {
           // Mendapatkan ID pengguna dari token akses
           const decodedToken = jwtDecode(accessToken);
           const userId = decodedToken.id;
+          console.log('Decoded Token:', decodedToken);
 
           // Mendapatkan informasi pengguna berdasarkan ID pengguna yang login
           const response = await axiosInstance.get(`/api/users/${userId}`, {
