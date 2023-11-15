@@ -39,8 +39,11 @@ export default function TopAppBar() {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-
-          setUserInfo(response.data);
+          if (response.data && response.data.username) {
+            setUserInfo(response.data);
+          } else {
+            console.error('Invalid user data in the server response:', response.data);
+          }
         }
       } catch (error) {
         console.error('Error fetching user information:', error);
