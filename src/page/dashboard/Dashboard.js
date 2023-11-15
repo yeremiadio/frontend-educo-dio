@@ -11,7 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../../config/axiosInstance';
 
 export default function Dashboard() {
-  const [userInfo, setUserInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
     // Menggunakan localStorage untuk mendapatkan token akses
     const accessToken = localStorage.getItem('accessToken');
 
