@@ -1,6 +1,5 @@
 // CodeList.js
 import React, { useEffect, useState } from "react";
-// import axios from 'axios';
 import {
   Button,
   Card,
@@ -11,50 +10,41 @@ import {
 } from "@mui/material";
 import axiosInstance from "../../config/axiosInstance";
 
-function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
+function ListCodes({ onCodeSelect, codeId }) {
   const [codes, setCodes] = useState([]);
 
   useEffect(() => {
     async function fetchCodes() {
       try {
-        // Mengambil token dari localStorage
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem("accessToken");
 
-        // Mengecek apakah token tersedia
-        if (!accessToken) {
-            console.error('Access token not available.');
-            return;
-        }
-
-        // Menambahkan token pada header permintaan
-        const response = await axiosInstance.get("/api/codes", {
+        if (accessToken) {
+          const response = await axiosInstance.get("/api/codes", {
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
             },
-        });
+          });
 
-        // Menyimpan data ke dalam state
-        setCodes(response.data.codes);
-    } catch (error) {
+          setCodes(response.data);
+        }
+      } catch (error) {
         console.error("Failed to fetch codes:", error);
-    }
+      }
     }
 
     fetchCodes();
-
-    // lakukan polling untuk refresh data
-    // const pollingInterval = setInterval(fetchCodes, 5000);
-
-    // return () => {
-    //     clearInterval(pollingInterval);
-    // };
   }, []);
 
-  const handleCodeDelete = async () => {
+  const handleCodeDelete = async (codeIdToDelete) => {
     try {
-      if (onDeleteCode) {
-        // Penanganan Berhasil
-        await axiosInstance.delete(`/api/codes/${onDeleteCode}`);
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (accessToken) {
+        await axiosInstance.delete(`/api/codes/${codeIdToDelete}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         console.log("Delete Code success.");
         alert("Berhasil menghapus data Code.");
       }
@@ -99,7 +89,7 @@ function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
       <br />
       <Button
         variant="contained"
-        onClick={handleCodeDelete}
+        onClick={() => handleCodeDelete(codeId)}
         sx={{ marginBottom: 2, fontFamily: "cursive" }}
       >
         Delete
