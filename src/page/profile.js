@@ -7,7 +7,6 @@ import axiosInstance from "../config/axiosInstance";
 
 const Profile = () => {
     const [userInfo, setUserInfo] = useState(null);
-
     // Menggunakan localStorage untuk mendapatkan token akses
     const accessToken = localStorage.getItem('accessToken');
 
@@ -25,7 +24,7 @@ const Profile = () => {
                             Authorization: `Bearer ${accessToken}`,
                         },
                     });
-
+                    
                     setUserInfo(response.data.user);
                 }
             } catch (error) {
@@ -38,15 +37,6 @@ const Profile = () => {
 
     if (!accessToken) {
         return <Navigate to="/login" />;
-    }
-
-    let roleLabel = '';
-    if (userInfo.roleId === 1) {
-    roleLabel = 'Siswa';
-    } else if (userInfo.roleId === 2) {
-    roleLabel = 'Guru';
-    } else if (userInfo.roleId === 3) {
-    roleLabel = 'Admin';
     }
 
     return (
@@ -79,7 +69,7 @@ const Profile = () => {
                             </Typography>
                             <Typography component={"h5"} variant="h6" align="center" >
                                 <strong> 
-                                    {roleLabel}
+                                    {userInfo.roleId}
                                 </strong>
                             </Typography>
                         </CardContent>
