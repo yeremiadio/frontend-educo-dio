@@ -39,7 +39,10 @@ const TabelAssignments = () => {
       const xlsData = XLSX.utils.json_to_sheet(response.data);
 
       // Membuat blob dari data XLSX
-      const blob = XLSX.write(xlsData, { bookType: 'xlsx', bookSST: true, type: 'blob' });
+      const blob = XLSX.write(
+        { Sheets: { 'Assignments': xlsData }, SheetNames: ['Assignments'] },
+        { bookType: 'xlsx', bookSST: true, type: 'blob' }
+      );
 
       // Membuat URL objek untuk blob
       const url = window.URL.createObjectURL(blob);
