@@ -6,7 +6,7 @@ import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from 
 // import { login } from "../utils/slices/auth";
 // import { clearMessage } from "../utils/slices/message";
 import { theme } from "../utils/ThemeProvider";
-// import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import Copyright from "../utils/Copyright";
 // import { loginSchema } from "../utils/schemas";
 
