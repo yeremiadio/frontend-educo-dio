@@ -5,23 +5,48 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import NavigationDrawer from '../../components/Navbar/DrawerNavigation';
 import { theme } from '../../utils/ThemeProvider';
 import eventBus from '../../utils/common/eventBus';
+import { jwtDecode } from 'jwt-decode';
+import axiosInstance from '../../config/axiosInstance';
 
 export default function TopAppBar() {
-  
+  const [userInfo, setUserInfo] = useState(null);
 
   // Menggunakan localStorage untuk mendapatkan informasi pengguna
-  const currentUser = JSON.parse(localStorage.getItem('user'));
+  const accessToken = localStorage.getItem('accessToken');
 
   const logOut = useCallback(() => {
     // Menghapus informasi pengguna dari localStorage saat logout
-    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    setUserInfo(null);
   }, []);
 
   useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        if (accessToken) {
+          // Mendapatkan ID pengguna dari token akses
+          const decodedToken = jwtDecode(accessToken);
+          const userId = decodedToken.id;
+
+          // Mendapatkan informasi pengguna berdasarkan ID pengguna yang login
+          const response = await axiosInstance.get(`/api/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          setUserInfo(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+      }
+    };
+
+    fetchUserInfo();
 
     eventBus.on('logout', () => {
       logOut();
@@ -30,7 +55,7 @@ export default function TopAppBar() {
     return () => {
       eventBus.remove('logout');
     };
-  }, [currentUser, logOut]);
+  }, [accessToken, logOut]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,10 +65,10 @@ export default function TopAppBar() {
           <Typography variant='h5' noWrap sx={{ flexGrow: 1 }} fontFamily='fantasy'>
             EDUCO
           </Typography>
-          {currentUser && (
+          {userInfo && (
             <>
               <Typography variant='h6' noWrap sx={{ marginRight: 4 }} fontFamily='serif'>
-                Welcome, {currentUser.username}
+                Welcome, {userInfo.username}
               </Typography>
               <Button variant='outlined'>
                 <a href='/' onClick={logOut}>
