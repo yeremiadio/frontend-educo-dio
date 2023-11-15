@@ -67,17 +67,21 @@ const Profile = () => {
                             <Typography component={"h5"} variant="h6" sx={{ alignContent: "center"}} >
                                 <strong>Authorities : </strong>
                             </Typography>
-                            {userInfo.roleId && !userInfo.roleId.include(1) ?(
-                                <Typography component={"h5"} variant="h6" align="center" >
-                                    <strong> 
-                                        Guru
-                                    </strong>
+                            {userInfo.roleId && userInfo.roleId === 1 ? (
+                                <Typography component={"h5"} variant="h6" align="center">
+                                    <strong>Siswa</strong>
                                 </Typography>
-                            ):(
-                                <Typography component={"h5"} variant="h6" align="center" >
-                                    <strong> 
-                                        Siswa
-                                    </strong>
+                            ) : userInfo.roleId && userInfo.roleId === 2 ? (
+                                <Typography component={"h5"} variant="h6" align="center">
+                                    <strong>Guru</strong>
+                                </Typography>
+                            ) : userInfo.roleId && userInfo.roleId === 3 ? (
+                                <Typography component={"h5"} variant="h6" align="center">
+                                    <strong>Admin</strong>
+                                </Typography>
+                            ) : (
+                                <Typography component={"h5"} variant="h6" align="center">
+                                    <strong>Peran tidak diketahui</strong>
                                 </Typography>
                             )}
                         </CardContent>
