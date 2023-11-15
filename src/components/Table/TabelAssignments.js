@@ -36,12 +36,10 @@ const TabelAssignments = () => {
       const response = await axiosInstance.get('/api/getassignments');
 
       // Mengonversi data JSON ke format XLSX
-      const worksheet = XLSX.utils.json_to_sheet(response.data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+      const xlsData = XLSX.utils.json_to_sheet(response.data);
 
       // Membuat blob dari data XLSX
-      const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'blob' });
+      const blob = XLSX.write(xlsData, { bookType: 'xlsx', bookSST: true, type: 'blob' });
 
       // Membuat URL objek untuk blob
       const url = window.URL.createObjectURL(blob);
