@@ -13,7 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../../config/axiosInstance';
 
 export default function TopAppBar() {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState('');
 
   // Menggunakan localStorage untuk mendapatkan informasi pengguna
   const accessToken = localStorage.getItem('accessToken');
