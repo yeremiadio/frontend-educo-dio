@@ -2,12 +2,12 @@
 // import { useDispatch, useSelector } from "react-redux";
 // import { Navigate, useNavigate } from "react-router-dom";
 // import { useFormik } from "formik";
-// import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
 // import { login } from "../utils/slices/auth";
 // import { clearMessage } from "../utils/slices/message";
-// import { theme } from "../utils/ThemeProvider";
+import { theme } from "../utils/ThemeProvider";
 // import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-// import Copyright from "../utils/Copyright";
+import Copyright from "../utils/Copyright";
 // import { loginSchema } from "../utils/schemas";
 
 
@@ -51,7 +51,6 @@
 //     }
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import axiosInstance from '../config/axiosInstance';
 
 const Login = () => {
