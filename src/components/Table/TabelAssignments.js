@@ -40,7 +40,7 @@ const TabelAssignments = () => {
 
       // Membuat blob dari data XLSX
       const blob = XLSX.write(
-        { Sheets: { 'Assignments': xlsData }, SheetNames: ['Assignments'] },
+        { Sheets: { 'Sheet 1': xlsData }, SheetNames: ['Sheet 1'] },
         { bookType: 'xlsx', bookSST: true, type: 'blob' }
       );
 
