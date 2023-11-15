@@ -39,10 +39,10 @@ export default function TopAppBar() {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          if (response.user && response.user.username) {
-            setUserInfo(response.user);
+          if (response.data.user && response.data.user.username) {
+            setUserInfo(response.data.user);
           } else {
-            console.error('Invalid user data in the server response:', response.user);
+            console.error('Invalid user data in the server response:', response.data.user);
           }
         }
       } catch (error) {
@@ -72,7 +72,7 @@ export default function TopAppBar() {
           {userInfo && (
             <>
               <Typography variant='h6' noWrap sx={{ marginRight: 4 }} fontFamily='serif'>
-                Welcome, {userInfo.id}
+                Welcome, {userInfo.username}
               </Typography>
               <Button variant='outlined'>
                 <a href='/' onClick={logOut}>
