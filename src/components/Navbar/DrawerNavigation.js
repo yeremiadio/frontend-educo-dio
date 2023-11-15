@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -9,18 +9,49 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AccountTree, Archive, Assignment, Book, Dashboard, Home, MenuOpen, QuestionMark } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import axiosInstance from '../../config/axiosInstance';
 
 
 
 export default function NavigationDrawer() {
   const navigate = useNavigate();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false,
   });
+  const [userInfo, setUserInfo] = useState(null);
+    // Menggunakan localStorage untuk mendapatkan token akses
+  const accessToken = localStorage.getItem('accessToken');
 
-  const { user: currentUser } = useSelector((state) => state.auth);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+        try {
+            if (accessToken) {
+                // Mendekode token akses untuk mendapatkan informasi pengguna
+                const decodedToken = jwtDecode(accessToken);
+                const userId = decodedToken.id;
+
+                // Mendapatkan informasi pengguna berdasarkan ID pengguna yang login
+                const response = await axiosInstance.get(`/api/users/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                
+                setUserInfo(response.data.user);
+            }
+        } catch (error) {
+            console.error('Error fetching user information:', error);
+        }
+    };
+
+    fetchUserInfo();
+  }, [accessToken]);
+
+if (!accessToken) {
+    return <Navigate to="/login" />;
+}
 
   const toggleDrawer =
     (anchor , open) =>
@@ -77,7 +108,7 @@ export default function NavigationDrawer() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            {currentUser && !currentUser.roles.includes("ROLE_SISWA") ? (
+            {userInfo && !userInfo.roleId === ("1") ? (
               <ListItemButton onClick={() => navigate("/archive")}>
                 <ListItemIcon>
                   <Archive />
@@ -130,7 +161,8 @@ export default function NavigationDrawer() {
               (anchor)
             </MenuOpen>
           </Button>
-          <Drawer
+          {userInfo && (
+            <Drawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
@@ -138,6 +170,7 @@ export default function NavigationDrawer() {
             {list(anchor)}
             
           </Drawer>
+          )}
         </React.Fragment>
       ))}
     </div>
