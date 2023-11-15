@@ -30,15 +30,25 @@ function EditorCode({ selectedCodeId, onClearCode }) {
   async function compile() {
     if (!userCode) return;
     setLoading(true);
-
+  
     try {
-      const { data } = await axiosInstance.post(`/api/compile`, {
-        code: userCode,
-        userInput: userInput,
-      });
-
+      const accessToken = localStorage.getItem("accessToken");
+  
+      const { data } = await axiosInstance.post(
+        "/api/compile",
+        {
+          code: userCode,
+          userInput: userInput,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+  
       const { stdout, stderr, error } = data.data;
-
+  
       if (error && error.length > 0 && stderr && stderr.length > 0) {
         setUserOutput(stderr);
       } else {
@@ -59,29 +69,48 @@ function EditorCode({ selectedCodeId, onClearCode }) {
 
   const handleSaveCode = async () => {
     try {
+      const accessToken = localStorage.getItem("accessToken");
+  
       if (selectedCodeId) {
         // Update code yang dipilih
-        await axiosInstance.put(`/api/codes/${selectedCodeId}`, {
-          name,
-          userCode,
-          userInput,
-        });
+        await axiosInstance.put(
+          `/api/codes/${selectedCodeId}`,
+          {
+            name,
+            userCode,
+            userInput,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         alert("Code berhasil di edit.");
         console.log("Successfully Edit Code.");
       } else {
         // Simpan code baru jika tidak ada id yang terpilih
-        await axiosInstance.post("/api/save-compile", {
-          name,
-          userCode,
-          userInput,
-        });
+        await axiosInstance.post(
+          "/api/save-compile",
+          {
+            name,
+            userCode,
+            userInput,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         setShowPopup(true);
         console.log("Successfully saved code.");
-      } // Ganti userId dengan yang sesuai
+      }
     } catch (error) {
       console.error("Failed to save code:", error);
     }
   };
+
   const closePopup = () => {
     setShowPopup(false);
   };
@@ -91,7 +120,14 @@ function EditorCode({ selectedCodeId, onClearCode }) {
       //Mengambil Code yang telah tersimpan
       async function fetchCode() {
         try {
-          const response = await axiosInstance.get(`/api/codes/${selectedCodeId}`);
+          const accessToken = localStorage.getItem("accessToken");
+  
+          const response = await axiosInstance.get(`/api/codes/${selectedCodeId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+  
           const { name, userCode, userInput } = response.data;
           setName(name);
           setUserCode(userCode);
@@ -103,10 +139,11 @@ function EditorCode({ selectedCodeId, onClearCode }) {
       fetchCode();
     }
   }, [selectedCodeId]);
+  
 
   const handleClearEditor = () => {
     setName("");
-    setUserCode("#Enter your Code here.");
+    setUserCode("# Enter your Code here");
     setUserInput("");
     onClearCode();
   };
