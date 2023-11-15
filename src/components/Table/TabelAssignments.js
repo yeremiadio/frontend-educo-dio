@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
+import json2xls from "json2xls";
 
 const TabelAssignments = () => {
   const [data, setData] = useState([]);
@@ -29,21 +30,34 @@ const TabelAssignments = () => {
       });
   }, []);
 
-  const handleDownload = () => {
-    axiosInstance
-      .get("/api/download", { responseType: "blob" })
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = "data_assignments.xlsx";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
+  const handleDownload = async() => {
+    try {
+      // mengambil data dari getassignments
+      const response = await axiosInstance.get('/api/getassignments');
 
-        console.log("Download Data success:", response);
-      });
+      // mengonversi json to xlxs
+      const xlsData = json2xls(response.data);
+
+      // membuat blob dari data xlsx
+      const blob = new Blob([xlsData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Membuat URL objek untuk blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Membuat elemen <a> untuk trigger unduhan
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'data_assignments.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      console.log('Download Data success.');
+    } catch (error) {
+      console.error('Failed to download assignments data:', error);
+    }
   };
 
   const handleCheckboxChange = (rowIndex) => {
