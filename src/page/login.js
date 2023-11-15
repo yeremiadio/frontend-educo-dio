@@ -13,36 +13,34 @@ import { loginSchema } from "../utils/schemas";
 
 
 const Login = () => {
-    let navigate = useNavigate();
-
+    const navigate = useNavigate();
     const [isShowPassword, setIsShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
     const { isLoggedIn } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
-
     const formik = useFormik({
-        initialValues : {
+        initialValues: {
             email: '',
             password: '',
         },
-        validationSchema : loginSchema,
-        onSubmit : (values) => {
-            
-            setLoading(true);
-    
-            dispatch(login(values))
-            .unwrap()
-            .then(() => {
-                
-                window.location.reload();
-            })
-            .catch(() => {
+        validationSchema: loginSchema,
+        onSubmit: async (values) => {
+            try {
+                // Mengatur status loading menjadi true
+                setLoading(true);
+
+                // Melakukan dispatch login
+                await dispatch(login(values)).unwrap();
+
+                // Navigasi ke halaman dashboard setelah login berhasil
+                navigate("/dashboard");
+            } catch (error) {
+                // Menangani error, misalnya menampilkan pesan kesalahan kepada pengguna
+                console.error(error);
+            } finally {
+                // Mengatur status loading menjadi false setelah selesai
                 setLoading(false);
-            });
+            }
         },
     });
 
