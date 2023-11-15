@@ -1,37 +1,34 @@
-import { AppBar, Button, ThemeProvider, Toolbar, Typography } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import {
+  AppBar,
+  Button,
+  ThemeProvider,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import React, { useCallback, useEffect } from 'react';
 import NavigationDrawer from '../../components/Navbar/DrawerNavigation';
-import { theme } from "../../utils/ThemeProvider";
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../utils/slices/auth';
+import { theme } from '../../utils/ThemeProvider';
 import eventBus from '../../utils/common/eventBus';
 
 export default function TopAppBar() {
-  const [showGuruBoard, setShowGuruBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  
 
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  // Menggunakan localStorage untuk mendapatkan informasi pengguna
+  const currentUser = JSON.parse(localStorage.getItem('user'));
 
   const logOut = useCallback(() => {
-    dispatch(logout());
-  }, [dispatch]);
+    // Menghapus informasi pengguna dari localStorage saat logout
+    localStorage.removeItem('user');
+  }, []);
 
   useEffect(() => {
-    if (currentUser) {
-      setShowGuruBoard(currentUser.roles.includes("ROLE_GURU"));
-      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-    } else {
-      setShowGuruBoard(false);
-      setShowAdminBoard(false);
-    }
 
-    eventBus.on("logout", () => {
+    eventBus.on('logout', () => {
       logOut();
     });
 
     return () => {
-      eventBus.remove("logout");
+      eventBus.remove('logout');
     };
   }, [currentUser, logOut]);
 
@@ -39,18 +36,24 @@ export default function TopAppBar() {
     <ThemeProvider theme={theme}>
       <AppBar position='static' color='transparent'>
         <Toolbar>
-          <NavigationDrawer/>
-          <Typography variant="h5" noWrap sx={{flexGrow: 1}} fontFamily={'fantasy'}>EDUCO</Typography>
+          <NavigationDrawer />
+          <Typography variant='h5' noWrap sx={{ flexGrow: 1 }} fontFamily='fantasy'>
+            EDUCO
+          </Typography>
           {currentUser && (
-          <><Typography variant="h6" no Wrap sx={{ marginRight: 4 }} fontFamily={'serif'}>Welcome, {currentUser.username}</Typography>
-            <Button variant="outlined" >
-              <a href="/" onClick={logOut}>
-                LogOut
-              </a>
-            </Button>
-          </>)}
+            <>
+              <Typography variant='h6' noWrap sx={{ marginRight: 4 }} fontFamily='serif'>
+                Welcome, {currentUser.username}
+              </Typography>
+              <Button variant='outlined'>
+                <a href='/' onClick={logOut}>
+                  LogOut
+                </a>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </ThemeProvider>
-  )
+  );
 }
