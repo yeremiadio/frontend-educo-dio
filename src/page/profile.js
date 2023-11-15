@@ -70,8 +70,13 @@ const Profile = () => {
                             </Typography>
                             <Typography component={"h5"} variant="h6" sx={{ alignContent: "center"}} >
                                 <strong> 
-                                    {userInfo.roleId &&
-                                    userInfo.roleId.map((roles, index) => <li key={index}>{roles.name}</li>)} 
+                                    {userInfo.roleId && userInfo.roleId.map((role, index) => (
+                                        <li key={index}>
+                                            {role === 1 && 'Siswa'}
+                                            {role === 2 && 'Guru'}
+                                            {role === 3 && 'Admin'}
+                                        </li>
+                                    ))}
                                 </strong>
                             </Typography>
                         </CardContent>
