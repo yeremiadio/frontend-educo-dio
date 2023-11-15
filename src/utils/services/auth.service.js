@@ -18,8 +18,8 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      if (!!response?.data) {
-        localStorage.setItem("token", response.data.token);
+      if (response.data) {
+        localStorage.setItem("accessToken", response.data.accessToken);
       }
 
       return response.data;
@@ -27,14 +27,14 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("accessToken");
   return axiosInstance.post(API_URL + "signout").then((response) => {
     return response.data;
   });
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("token"));
+  return JSON.parse(localStorage.getItem("accessToken"));
 };
 
 const AuthService = {
