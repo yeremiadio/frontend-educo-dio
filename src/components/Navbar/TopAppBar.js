@@ -31,7 +31,6 @@ export default function TopAppBar() {
           // Mendapatkan ID pengguna dari token akses
           const decodedToken = jwtDecode(accessToken);
           const userId = decodedToken.id;
-          console.log('Decoded Token:', decodedToken);
 
           // Mendapatkan informasi pengguna berdasarkan ID pengguna yang login
           const response = await axiosInstance.get(`/api/users/${userId}`, {
