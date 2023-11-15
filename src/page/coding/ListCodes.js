@@ -17,13 +17,27 @@ function ListCodes({ onCodeSelect, onDeleteCode, codeId }) {
   useEffect(() => {
     async function fetchCodes() {
       try {
-        const response = await axiosInstance.get(
-          "/api/codes"
-        );
-        setCodes(response.data);
-      } catch (error) {
+        // Mengambil token dari localStorage
+        const accessToken = localStorage.getItem('accessToken');
+
+        // Mengecek apakah token tersedia
+        if (!accessToken) {
+            console.error('Access token not available.');
+            return;
+        }
+
+        // Menambahkan token pada header permintaan
+        const response = await axiosInstance.get("/api/codes", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        // Menyimpan data ke dalam state
+        setCodes(response.data.codes);
+    } catch (error) {
         console.error("Failed to fetch codes:", error);
-      }
+    }
     }
 
     fetchCodes();
