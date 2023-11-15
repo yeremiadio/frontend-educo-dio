@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
-import json2xls from "json2xls";
+import * as XLSX from 'xlsx';
 
 const TabelAssignments = () => {
   const [data, setData] = useState([]);
@@ -35,11 +35,13 @@ const TabelAssignments = () => {
       // mengambil data dari getassignments
       const response = await axiosInstance.get('/api/getassignments');
 
-      // mengonversi json to xlxs
-      const xlsData = json2xls(response.data);
+      // Mengonversi data JSON ke format XLSX
+      const worksheet = XLSX.utils.json_to_sheet(response.data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
 
-      // membuat blob dari data xlsx
-      const blob = new Blob([xlsData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      // Membuat blob dari data XLSX
+      const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'blob' });
 
       // Membuat URL objek untuk blob
       const url = window.URL.createObjectURL(blob);
