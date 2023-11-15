@@ -69,7 +69,7 @@ export default function TopAppBar() {
           {userInfo && (
             <>
               <Typography variant='h6' noWrap sx={{ marginRight: 4 }} fontFamily='serif'>
-                Welcome, {userInfo.username}
+                Welcome, {userInfo.id}
               </Typography>
               <Button variant='outlined'>
                 <a href='/' onClick={logOut}>
