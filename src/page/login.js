@@ -1,54 +1,80 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
-import { login } from "../utils/slices/auth";
-import { clearMessage } from "../utils/slices/message";
-import { theme } from "../utils/ThemeProvider";
-import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-import Copyright from "../utils/Copyright";
-import { loginSchema } from "../utils/schemas";
+// import React, { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Navigate, useNavigate } from "react-router-dom";
+// import { useFormik } from "formik";
+// import { Avatar, Button, Container, TextField, ThemeProvider, Typography } from "@mui/material";
+// import { login } from "../utils/slices/auth";
+// import { clearMessage } from "../utils/slices/message";
+// import { theme } from "../utils/ThemeProvider";
+// import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+// import Copyright from "../utils/Copyright";
+// import { loginSchema } from "../utils/schemas";
 
 
+
+// const Login = () => {
+//     let navigate = useNavigate();
+
+//     const [isShowPassword, setIsShowPassword] = useState(false);
+//     const [loading, setLoading] = useState(false);
+//     const { isLoggedIn } = useSelector((state) => state.auth);
+//     const dispatch = useDispatch();
+
+//     useEffect(() => {
+//         dispatch(clearMessage());
+//     }, [dispatch]);
+
+//     const formik = useFormik({
+//         initialValues : {
+//             email: "",
+//             password: "",
+//         },
+//         validationSchema : loginSchema,
+//         onSubmit : (values) => {
+//             const {email, password} = values;
+//             setLoading(true);
+    
+//             dispatch(login(email, password))
+//             .unwrap()
+//             .then(() => {
+                
+//                 window.location.reload();
+//             })
+//             .catch(() => {
+//                 setLoading(false);
+//             });
+//         },
+//     });
+
+//     if (isLoggedIn) {
+//         return <Navigate to="/dashboard" />;
+//     }
+
+import React, { useState } from 'react';
+import axios from 'axios';
+import axiosInstance from '../config/axiosInstance';
 
 const Login = () => {
-    let navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const [isShowPassword, setIsShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const { isLoggedIn } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
+  const handleLogin = async () => {
+    try {
+      const response = await axiosInstance.post('/api/auth/signin', {
+        email,
+        password,
+      });
 
-    useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
+      // Menyimpan token ke dalam lokal storage
+      localStorage.setItem('accessToken', response.data.accessToken);
 
-    const formik = useFormik({
-        initialValues : {
-            email: "",
-            password: "",
-        },
-        validationSchema : loginSchema,
-        onSubmit : (values) => {
-            
-            setLoading(true);
-    
-            dispatch(login(values))
-            .unwrap()
-            .then(() => {
-                
-                window.location.reload();
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-        },
-    });
-
-    if (isLoggedIn) {
-        return <Navigate to="/dashboard" />;
+      // Lakukan sesuatu setelah login berhasil, misalnya navigasi ke halaman lain
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      // Handle kesalahan, misalnya menampilkan pesan kesalahan kepada pengguna
     }
+  };
 
     return (
         <div className="main"> 
@@ -61,7 +87,7 @@ const Login = () => {
                     <Typography component={"h1"} variant="h5" color="ActiveCaption">
                         Sign In
                     </Typography>
-                        <form onSubmit={formik.handleSubmit} style={{alignItems: "center", margin: 2 }}>
+                        {/* <form onSubmit={formik.handleSubmit} style={{alignItems: "center", margin: 2 }}>
                             <TextField 
                                 fullWidth
                                 id="email"
@@ -99,7 +125,19 @@ const Login = () => {
                                 </div>
                             </div>
                             <Button fullWidth type="submit" variant="contained" disabled={loading} sx={{margin: 2}}>Sign In</Button>
-                        </form>
+                        </form> */}
+                         <div>
+                            <h1>Login</h1>
+                            <div>
+                                <label>Email:</label>
+                                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div>
+                                <label>Password:</label>
+                                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                            <button onClick={handleLogin}>Login</button>
+                        </div>
                         <Copyright 
                             variant="body2"
                             color="ActiveCaption"
