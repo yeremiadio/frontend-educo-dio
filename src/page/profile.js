@@ -40,11 +40,20 @@ const Profile = () => {
         return <Navigate to="/login" />;
     }
 
+    let roleLabel = '';
+    if (userInfo.roleId === 1) {
+    roleLabel = 'Siswa';
+    } else if (userInfo.roleId === 2) {
+    roleLabel = 'Guru';
+    } else if (userInfo.roleId === 3) {
+    roleLabel = 'Admin';
+    }
+
     return (
         <div className="main">
             <div className="content">
                 {userInfo && (
-                    <Card sx={{ bgcolor: "whitesmoke", color: "black" }}>
+                    <Card sx={{ bgcolor: "whitesmoke", color: "black", fontFamily: 'fantasy' }}>
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: "darkblue" }} aria-label="Ava" >{userInfo.id}</Avatar>
@@ -68,9 +77,9 @@ const Profile = () => {
                             <Typography component={"h5"} variant="h6" sx={{ alignContent: "center"}} >
                                 <strong>Authorities : </strong>
                             </Typography>
-                            <Typography component={"h5"} variant="h6" sx={{ alignContent: "center"}} >
+                            <Typography component={"h5"} variant="h6" align="center" >
                                 <strong> 
-                                    {userInfo.roleId}
+                                    {roleLabel}
                                 </strong>
                             </Typography>
                         </CardContent>
