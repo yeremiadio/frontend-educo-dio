@@ -14,7 +14,6 @@ import {
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
 import * as XLSX from 'xlsx';
-import * as FileSaver from 'file-saver';
 
 const TabelAssignments = () => {
   const [data, setData] = useState([]);
@@ -46,27 +45,22 @@ const TabelAssignments = () => {
       // Mengonversi workbook menjadi blob
       const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'blob' });
 
-      // Menggunakan FileSaver untuk menyimpan blob sebagai file
-      FileSaver.saveAs(blob, 'data_assignments.xlsx');
+      // Membuat URL objek untuk blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Membuat elemen <a> untuk trigger unduhan
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'data_assignments.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
 
       console.log('Download Data success.');
     } catch (error) {
       console.error('Failed to download assignments data:', error);
-
-      // Handle error lebih rinci
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Request data:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error message:', error.message);
-      }
     }
   };
 
