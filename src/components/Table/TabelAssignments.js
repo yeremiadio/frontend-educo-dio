@@ -14,6 +14,7 @@ import {
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
 import * as XLSX from 'xlsx';
+import { FileSaver } from "file-saver";
 
 const TabelAssignments = () => {
   const [data, setData] = useState([]);
@@ -43,20 +44,13 @@ const TabelAssignments = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
 
       // Mengonversi workbook menjadi blob
-      const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'file' });
+      const blob = XLSX.write(workbook, { bookType: 'xlsx', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-      // Membuat URL objek untuk blob
-      const url = window.URL.createObjectURL(blob);
+      // Membuat blob URL dari blob
+      const blobURL = window.URL.createObjectURL(new Blob([blob]));
 
-      // Membuat elemen <a> untuk trigger unduhan
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'data_assignments.xlsx';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      // Mengunduh file menggunakan FileSaver
+      FileSaver.saveAs(blobURL, 'data_assignments.xlsx');
 
       console.log('Download Data success.');
     } catch (error) {
