@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
-import * as XLSX from 'xlsx';
+import xlsx from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 const TabelAssignments = () => {
   const [data, setData] = useState([]);
@@ -32,34 +33,39 @@ const TabelAssignments = () => {
 
   const handleDownload = async() => {
     try {
-      // mengambil data dari getassignments
-      const response = await axiosInstance.get('/api/getassignments');
+      // Mengambil data dari getassignments
+      const response = await axiosInstance.get("/api/getassignments");
 
-      // Mengonversi data JSON ke format XLSX
-      const xlsData = XLSX.utils.json_to_sheet(response.data);
+      // Mengonversi json to xlxs
+      const xlsData = xlsx.utils.json_to_sheet(response.data);
 
-      // Membuat blob dari data XLSX
-      const blob = XLSX.write(
+      // Membuat blob dari data xlsx
+      const blob = xlsx.write(
         { Sheets: { 'Sheet 1': xlsData }, SheetNames: ['Sheet 1'] },
         { bookType: 'xlsx', bookSST: true, type: 'blob' }
       );
 
-      // Membuat URL objek untuk blob
-      const url = window.URL.createObjectURL(blob);
-
-      // Membuat elemen <a> untuk trigger unduhan
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'data_assignments.xlsx';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      // Menggunakan FileSaver untuk menyimpan file
+      FileSaver.saveAs(blob, 'data_assignments.xlsx');
 
       console.log('Download Data success.');
     } catch (error) {
       console.error('Failed to download assignments data:', error);
+
+      // Handle error lebih rinci
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Request data:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+      }
     }
   };
 
