@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
-import xlsx from 'xlsx';
+import * as xlsx from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 const TabelAssignments = () => {
