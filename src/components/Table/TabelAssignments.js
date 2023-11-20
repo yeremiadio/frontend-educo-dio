@@ -46,7 +46,7 @@ const TabelAssignments = () => {
       );
 
       // Menggunakan FileSaver untuk menyimpan file
-      FileSaver.saveAs(blob, 'data_assignments.xlsx');
+      FileSaver.saveAs(new Blob([blob], { type: 'application/octet-stream' }), 'data_assignments.xlsx');
 
       console.log('Download Data success.');
     } catch (error) {
