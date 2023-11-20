@@ -33,25 +33,27 @@ const TabelAssignments = () => {
 
   const handleDownload = async() => {
     try {
-      // Mengambil data dari getassignments
-      const response = await axiosInstance.get("/api/getassignments");
-
+      const response = await axiosInstance.get('/api/getassignments');
+  
       // Mengonversi data menjadi worksheet
       const worksheet = XLSX.utils.json_to_sheet(response.data);
-
+  
       // Membuat workbook dan menambahkan worksheet
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
-
+  
       // Mengonversi workbook menjadi blob
-      const blob = XLSX.write(workbook, { bookType: 'xlsx', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
+      XLSX.write(workbook, { bookType: 'xlsx', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+      // Mengonversi blob menjadi ArrayBuffer
+      const arrayBuffer = XLSX.write(workbook, { bookType: 'arraybuffer', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
       // Membuat blob URL dari blob
-      const blobURL = window.URL.createObjectURL(new Blob([blob]));
-
+      const blobURL = window.URL.createObjectURL(new Blob([arrayBuffer]));
+  
       // Mengunduh file menggunakan FileSaver
       FileSaver.saveAs(blobURL, 'data_assignments.xlsx');
-
+  
       console.log('Download Data success.');
     } catch (error) {
       console.error('Failed to download assignments data:', error);
