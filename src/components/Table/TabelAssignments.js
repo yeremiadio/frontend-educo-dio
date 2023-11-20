@@ -43,7 +43,7 @@ const TabelAssignments = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
 
       // Mengonversi workbook menjadi blob
-      const blob = XLSX.write(workbook, { bookType: 'xlsx' });
+      const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'file' });
 
       // Membuat URL objek untuk blob
       const url = window.URL.createObjectURL(blob);
