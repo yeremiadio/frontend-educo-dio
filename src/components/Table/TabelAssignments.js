@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Delete, Download } from "@mui/icons-material";
 import axiosInstance from "../../config/axiosInstance";
-import * as xlsx from 'xlsx';
+import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 
 const TabelAssignments = () => {
@@ -36,17 +36,18 @@ const TabelAssignments = () => {
       // Mengambil data dari getassignments
       const response = await axiosInstance.get("/api/getassignments");
 
-      // Mengonversi json to xlxs
-      const xlsData = xlsx.utils.json_to_sheet(response.data);
+      // Mengonversi data menjadi worksheet
+      const worksheet = XLSX.utils.json_to_sheet(response.data);
 
-      // Membuat blob dari data xlsx
-      const blob = xlsx.write(
-        { Sheets: { 'Sheet 1': xlsData }, SheetNames: ['Sheet 1'] },
-        { bookType: 'xlsx', bookSST: true, type: 'blob' }
-      );
+      // Membuat workbook dan menambahkan worksheet
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
 
-      // Menggunakan FileSaver untuk menyimpan file
-      FileSaver.saveAs(new Blob([blob], { type: 'application/octet-stream' }), 'data_assignments.xlsx');
+      // Mengonversi workbook menjadi blob
+      const blob = XLSX.write(workbook, { bookType: 'xlsx', type: 'blob' });
+
+      // Menggunakan FileSaver untuk menyimpan blob sebagai file
+      FileSaver.saveAs(blob, 'data_assignments.xlsx');
 
       console.log('Download Data success.');
     } catch (error) {
